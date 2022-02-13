@@ -14,7 +14,20 @@ ex:
 1 0 1 0 & 1  = 0  (even)
 1 0 1   & 1  = 1  (odd)
  
-  
+ */
+
+
+void findevenodd(int n)
+{
+    if (n&1==1)
+        cout<<"odd";
+    else
+        cout<<"even";
+}
+
+
+
+/*
 2. calculate 2^n
 
 if we want to calculate 2^n
@@ -31,36 +44,20 @@ but we can calculate by simple trick  with binary left shift :
 2^n = 1<<n
 
 in binary 2^n is n 0's left to the 1 🤷‍😉😉
-
-
 */
 
 
-
-#include <bits/stdc++.h>
-using namespace std;
-#define sathish ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-#define ll long long int;
-#define nl cout<<endl;
-void solve()
+int find2powern(int n)
 {
-    int n;
-    cin>>n;
-    cout<<"2^"<<n<<"  is :"<<(1<<n);
-    nl
-    if (n&1==1)
-        cout<<"odd";
-    else
-        cout<<"even";
-    nl
+  return 1<<n;
 }
 
-int main(){
-    sathish
-    int t=1;
-    //cin >> t;
-    while(t--){
-    	solve();
+Q2:
+//Given an integer n, return true if it is a power of two. Otherwise, return false.
+
+    bool isPowerOfTwo(int n) {
+        return  n>0 && not ( n & n-1 );   
     }
-    return 0;
-}
+
+
+
