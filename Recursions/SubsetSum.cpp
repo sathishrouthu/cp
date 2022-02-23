@@ -39,3 +39,64 @@ int main()
   }
   return 0;
 }
+
+// To get only one subset whose sum == k 
+
+
+bool subs(int i,vector<int>& ds,vector<int> arr,int& s,int sum,vector<vector<int>>& ans)
+{
+  if(i==arr.size())
+  {
+    if(s==sum)
+    {
+      for(int i :  ds)
+        cout<<i<<"  ";
+      return true;
+    }
+   return false;
+  }
+  ds.push_back(arr[i]);
+  s+=arr[i];
+  if(subs(i+1,ds,arr,s,sum,ans)) return true;
+  ds.pop_back();
+  s-=arr[i];
+  if(subs(i+1,ds,arr,s,sum,ans)) return true;
+  return false;
+}
+
+
+// to count all subsequences whose sum==k
+
+int subs(int i,vector<int> arr,int& s,int sum)
+{
+  if(i==arr.size())
+  {
+    if(s==sum)  
+        return 1;
+    return 0;
+  }
+  s+=arr[i];
+  int l=subs(i+1,arr,s,sum);
+  s-=arr[i];
+  int r=subs(i+1,arr,s,sum);
+  return l+r;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
