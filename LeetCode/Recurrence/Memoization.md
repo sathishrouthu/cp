@@ -7,6 +7,7 @@ Ex:
 nth Fibonacci number : 
 
 `
+
 int nthfib(n)
 {
 unordered_map<int,int> hash;
@@ -19,7 +20,8 @@ else
     else
         return hash[n]=fib(n-1)+fib(n-2);
 }
- `
+
+`
  
  #### Climbing Stairs :
  
@@ -45,6 +47,7 @@ Explanation: There are three ways to climb to the top.
 
 
 `
+
 int climbStairs(int n)
 {
   int dp[n+1];
@@ -59,7 +62,9 @@ int climbStairs(int n)
 `
 TC : O(n) ,SC :  O(n)
 
+
 `
+
 int climbStairs(int n) {
         int one=1,two=1,temp;
         n--;
@@ -71,6 +76,8 @@ int climbStairs(int n) {
         }
         return one;
     }
-    `
+  
+  
+  `
     
 TC : O(n) , SC : O(1)
