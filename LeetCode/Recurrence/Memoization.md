@@ -4,18 +4,19 @@ Memoization is an optimization technique used primarily to speed up computer pro
 of expensive function calls and returning the cached result when the same inputs occur again.
 
 Ex:
-- Fibonacci number
+nth Fibonacci number : 
+
 `
-    unordered_map<int,int> hash;
-    int fib(int n) {
-        if (n<2)
-            return n;
+
+unordered_map<int,int> hash;
+int fib(int n) {
+    if (n<2)
+        return n;
+    else
+        if (hash.find(n)!=hash.end())
+            return hash[n];
         else
-            if (hash.find(n)!=hash.end())
-                return hash[n];
-            else
-                return hash[n]=fib(n-1)+fib(n-2);
-               
+            return hash[n]=fib(n-1)+fib(n-2);    
  `
  
  #### Climbing Stairs :
