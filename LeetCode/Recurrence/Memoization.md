@@ -7,16 +7,18 @@ Ex:
 nth Fibonacci number : 
 
 `
-
+int nthfib(n)
+{
 unordered_map<int,int> hash;
 int fib(int n) {
-    if (n<2)
-        return n;
+if (n<2)
+    return n;
+else
+    if (hash.find(n)!=hash.end())
+        return hash[n];
     else
-        if (hash.find(n)!=hash.end())
-            return hash[n];
-        else
-            return hash[n]=fib(n-1)+fib(n-2);    
+        return hash[n]=fib(n-1)+fib(n-2);
+}
  `
  
  #### Climbing Stairs :
