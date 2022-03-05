@@ -8,8 +8,6 @@ nth Fibonacci number :
 
 `
 
-int nthfib(n)
-{
 unordered_map<int,int> hash;
 int fib(int n) {
 if (n<2)
@@ -20,6 +18,7 @@ else
     else
         return hash[n]=fib(n-1)+fib(n-2);
 }
+
 
 `
  
@@ -59,7 +58,10 @@ int climbStairs(int n)
   }
   return dp[0];
 }
+
+
 `
+
 TC : O(n) ,SC :  O(n)
 
 
@@ -77,7 +79,6 @@ int climbStairs(int n) {
         return one;
     }
   
-  
-  `
+`
     
 TC : O(n) , SC : O(1)
