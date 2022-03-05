@@ -23,10 +23,12 @@ As one can see, the leftmost and rightmost numbers of each row are the base case
 As a result, we can define the base case as follows:
 
 f(i, j) = 1 where  j = 1  or  j = i
+below program
+return the nth row of the pascal's triangle
 
 
 `
-/* return the nth row of the pascal's triangle */
+
     vector<int> getRow(int rowIndex) {
         vector<vector<int>> m(rowIndex+1);
         for(int i=0;i<rowIndex+1;i++)
@@ -42,6 +44,5 @@ f(i, j) = 1 where  j = 1  or  j = i
         return m[rowIndex];
  
     }
-
 
 `
