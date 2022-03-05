@@ -25,3 +25,23 @@ As a result, we can define the base case as follows:
 f(i, j) = 1 where  j = 1  or  j = i
 
 
+`
+/* return the nth row of the pascal's triangle */
+    vector<int> getRow(int rowIndex) {
+        vector<vector<int>> m(rowIndex+1);
+        for(int i=0;i<rowIndex+1;i++)
+        {
+            m[i].resize(i+1);
+            m[i][0]=1;
+            m[i][i]=1;
+            for(int j=1;j<i;j++)
+            {
+                m[i][j]=m[i-1][j-1]+m[i-1][j];
+            }
+        }
+        return m[rowIndex];
+ 
+    }
+
+
+`
