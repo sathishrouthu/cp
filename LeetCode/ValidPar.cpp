@@ -4,14 +4,14 @@ public:
         stack<int> stac;
         string ans="";
         for(int i=0;i<s.length();i++){
-            if(s[i]=='('){
-                stac.push(i);
-                }
-            else if(s[i]==')'){
-                if(stac.empty()){
-                   s[i]='*';
-                   stac.pop();
-                }
+            if(s[i]=='(')
+            {
+                 stac.push(i);
+            }
+            else if(s[i]==')')
+            {
+                if(stac.empty())    s[i]='*';
+                else stac.pop();
             }
         }
         while(!stac.empty()){
