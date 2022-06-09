@@ -31,7 +31,6 @@ my Approach:
 3. now findout the maxsubarray sum in the array (kadane's algo)
 4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3)
 
-
 '''
    int ones = 0;
     for(int i=0;i<n;i++){
@@ -48,9 +47,8 @@ my Approach:
         curr_Sum += arr[i];
         maxSum = max(curr_Sum,maxSum);
         curr_Sum=curr_Sum<0?0:curr_Sum;
-        
     }
     maxSum = maxSum>0?maxSum:0;
     return (ones+maxSum);
     
-'''
+    '''
