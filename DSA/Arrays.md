@@ -78,3 +78,23 @@ Optimal:
 	Then, we will find the maximum subarray sum for ‘K’ = 2 irrespective of value of ‘K’ and return it as answer.
 * If 'ARR_SUM' > 0
 	Then, we will find the maximum subarray sum for K = 2 and we return ‘MAX_SUBARRAY_SUM’ plus (K-2) times ‘ARR_SUM' as the answer.
+	
+```
+long long maxSubSumKConcat(vector<int> &arr, int n, int k)
+{
+    long long currsum=0,maxsum = -9999999;
+    for(int i=0;i<n*2;i++){
+            currsum+=arr[i%n];
+            maxsum = max(maxsum,currsum);
+            currsum = currsum<0?0:currsum;
+        }
+    long long sum=0;
+    for(i : arr)
+        sum+=i;
+    if(sum<=0)
+        return maxsum;
+    else
+        return maxsum+sum*(k-2);
+}
+
+```
