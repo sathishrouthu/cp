@@ -32,23 +32,23 @@ my Approach:
 4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3).
 
 ```
-	   int ones = 0;
-    for(int i=0;i<n;i++){
-        if(arr[i]==1){
-            ones+=1;
-            arr[i]=-1;   
-        }
-        else
-            arr[i]=1;
+int ones = 0;
+for(int i=0;i<n;i++){
+	if(arr[i]==1){
+	    ones+=1;
+	    arr[i]=-1;   
+	}
+	else
+    		arr[i]=1;
     }
-    int curr_Sum = 0;
-    int maxSum = -1;
-    for(int i=0;i<n;i++){
-        curr_Sum += arr[i];
-        maxSum = max(curr_Sum,maxSum);
-        curr_Sum=curr_Sum<0?0:curr_Sum;
-    }
-    maxSum = maxSum>0?maxSum:0;
-    return (ones+maxSum);
+int curr_Sum = 0;
+int maxSum = -1;
+for(int i=0;i<n;i++){
+	curr_Sum += arr[i];
+	maxSum = max(curr_Sum,maxSum);
+	curr_Sum=curr_Sum<0?0:curr_Sum;
+}
+maxSum = maxSum>0?maxSum:0;
+return (ones+maxSum);
     
 ```
