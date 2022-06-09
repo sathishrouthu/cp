@@ -29,10 +29,9 @@ my Approach:
 1. count no. of ones in given array
 2. in the given array change 0 to +1 and 1 to -1
 3. now findout the maxsubarray sum in the array (kadane's algo)
-4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3)
+4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3).
 
-
-'''
+```
 	   int ones = 0;
     for(int i=0;i<n;i++){
         if(arr[i]==1){
@@ -52,4 +51,4 @@ my Approach:
     maxSum = maxSum>0?maxSum:0;
     return (ones+maxSum);
     
-'''
+    ```
