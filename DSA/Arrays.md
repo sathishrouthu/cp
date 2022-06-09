@@ -6,7 +6,7 @@ Array A[] = [-1, 2, -2, 5, 7, -3, 1]
 Maximum subarray sum -> 12
 Subarray(0-Based indexed) from index 1 to 4 -> [2, -2, 5, 7] and subarray(0-Based indexed) from index 3 to 4 -> [5, 7] have sum 12.
 
-'''
+```
 
 	long long Curr_sum=0,maxSum=-99999999;
 	for(int i=0;i<n;i++){
@@ -16,7 +16,7 @@ Subarray(0-Based indexed) from index 1 to 4 -> [2, -2, 5, 7] and subarray(0-Base
 	}
 	return maxSum>0?maxSum:0;
   
-'''
+```
 
 Problem:
 ##### Flip Bits
@@ -51,4 +51,4 @@ my Approach:
     maxSum = maxSum>0?maxSum:0;
     return (ones+maxSum);
     
-    ```
+```
