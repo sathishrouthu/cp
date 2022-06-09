@@ -47,7 +47,7 @@ for(int i=0;i<n;i++){
 	curr_Sum += arr[i];
 	maxSum = max(curr_Sum,maxSum);
 	curr_Sum=curr_Sum<0?0:curr_Sum;
-}
+	}
 maxSum = maxSum>0?maxSum:0;
 return (ones+maxSum);
     
