@@ -17,3 +17,26 @@ Given an array consisting of only 0s, 1s and 2s, sort the array.
 3. If A[mid] == 2, swap A[high] and A[mid] and increment mid by 1 and decrement high by 1.
 4. The resulting array will be a sorted array containing 0s, 1s, and 2s.
 
+```
+
+void sort012(int *arr, int n)
+{
+    int low=0,mid=0,high=n-1;
+    while(mid<=high)
+    {
+        if(arr[mid]==0){
+            swap(arr[mid],arr[low]);
+            low++;
+            mid++;
+        }
+        else if(arr[mid]==1)
+            mid++;
+        else if(arr[mid]==2){
+            swap(arr[mid],arr[high]);
+            high--;
+        }
+    }
+}
+
+
+```
