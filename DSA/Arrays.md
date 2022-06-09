@@ -89,8 +89,7 @@ long long maxSubSumKConcat(vector<int> &arr, int n, int k)
             currsum = currsum<0?0:currsum;
         }
     long long sum=0;
-    for(i : arr)
-        sum+=i;
+    for(i : arr)	sum+=i;
     if(sum<=0)
         return maxsum;
     else
