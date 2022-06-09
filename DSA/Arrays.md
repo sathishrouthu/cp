@@ -60,4 +60,21 @@ You have been given a vector/list 'ARR' consisting of ‘N’ integers. You are 
 Let’s define a vector/list 'CONCAT' of size 'N * K' formed by concatenating 'ARR' ‘K’ times. For example, if 'ARR' = [0, -1, 2] and 'K' = 3, then 'CONCAT' is given by [0, -1, 2, 0, -1, 2, 0, -1, 2].
 Your task is to find the maximum possible sum of any non-empty subarray (contagious) of 'CONCAT'.
 
+Naive:
+- We will loop from 0 to ‘N * K’ (loop variable ‘i’).
+- We initialize ‘CUR_SUM’ (to store sum of prefix elements) to 0 and ‘MAX_SUM’ (to store maximum subarray sum) to the minimum possible value.
+- For each iteration, we will-
+- Add ‘ARR[i % N]’ to ‘CUR_SUM’’.
+- Update ‘MAX_SUM’ if it’s value is less than ‘CUR_SUM’’.
+- If ‘CUR_SUM’’ becomes negative, we will reset it to 0.
+- Finally, we return ‘MAX_SUM’ as our answer.
 
+Optimal:
+- If K = 1-
+	We simply apply Kadane’s algorithm and return the maximum sum.
+- Else, 
+	we find the sum of elements (‘ARR_SUM'). Now there are two cases-
+* If 'ARR_SUM' <= 0
+	Then, we will find the maximum subarray sum for ‘K’ = 2 irrespective of value of ‘K’ and return it as answer.
+* If 'ARR_SUM' > 0
+	Then, we will find the maximum subarray sum for K = 2 and we return ‘MAX_SUBARRAY_SUM’ plus (K-2) times ‘ARR_SUM' as the answer.
