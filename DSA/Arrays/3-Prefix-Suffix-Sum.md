@@ -66,3 +66,90 @@ vector<int> sumInRanges(vector<int> &arr, int n, vector<vector<long long>> &quer
 }
 
 ```
+
+### Product of array except itself (238 Leetcode)
+
+Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+
+The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+
+You must write an algorithm that runs in O(n) time and without using the division operation.
+
+Follow up: Can you solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+
+Naive Approach :
+<pre>
+Compute prefix product array : prefix[i] = arr[0]\*arr[1]\*arr[2]......arr[i];
+
+compute suffix product array : suffix[i] = arr[n-1]\*arr[n-2]\*arr[n-3].....arr[i];
+
+now the resultant array can be obtained by  : 
+prod[0] = suffix[1];
+prod[n-1] = prefix[n-2];
+prod[i] = prefix[i-1] * suffix[i+1];  (i=1 --> n-2 );
+</pre>
+
+```
+vector<int> productExceptSelf(vector<int>& nums) {
+      int n=nums.size();
+      vector<int> pre(n),suf(n),prod(n);
+      
+      pre[0] = nums[0];
+      for(int i=1;i<n;i++){
+          pre[i]=pre[i-1]*nums[i];
+      }
+      suf[n-1] = nums[n-1];
+      for(int i=n-2;i>=0;i--){
+          suf[i] = suf[i+1]*nums[i];
+      }
+      prod[0] = suf[1];
+      prod[n-1] = pre[n-2];
+
+      for(int i=1;i<nums.size()-1;i++){
+          prod[i] = pre[i-1]*suf[i+1];
+      }
+      return prod;
+  }
+
+```
+
+Efficient approach by using O(1) space:
+
+First take an array product[]  :  final output array
+```
+initialize a variable temp = 1;
+for each index i from 0 to n-1:
+  prod[i] = temp;
+  temp*=arr[i];
+```
+
+above loop will calculate the product[i] = product of all elements upto to i-1;
+
+```
+now again intitialize temp=1
+for each index i from n-1 to 0:
+  prod[i] = temp;
+  temp*=arr[i];
+```
+  
+above loop will calculate the required final output such that the product of all other elements except that number
+
+
+```
+vector<int> productExceptSelf(vector<int>& nums) {
+    int n=nums.size();
+    vector<int> prod(n);
+    int temp=1;
+    for(int i=0;i<n;i++){
+        prod[i] = temp;
+        temp*=nums[i];            
+    }
+    temp=1;
+    for(int i=n-1;i>=0;i--){
+        prod[i]*=temp;      
+        temp*=nums[i];
+    }
+    return prod;
+}
+```
+
