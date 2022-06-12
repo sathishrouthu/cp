@@ -135,3 +135,41 @@ int brian_Kernighan(int n)
     }
     return count;
 }
+```
+
+### DAY-3
+
+##### 976. Largest Perimeter Triangle
+Given an integer array nums, return the largest perimeter of a triangle with a non-zero area, formed from three of these lengths. If it is impossible to form any triangle of a non-zero area, return 0.
+
+say the sidelengths of the triangle are a <= b <= c . The necessary and sufficient condition for these lengths to form a triangle of non-zero area is 
+a + b > c
+* Sort the array. 
+* For any c in the array, we choose the largest possible a≤b≤c:  these are just the two values adjacent to c. 
+* If this forms a triangle, we return the answer.
+
+```
+ int largestPerimeter(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        for(int i=nums.size()-3;i>=0;i--){
+            if(nums[i]+nums[i+1]>nums[i+2])
+                return nums[i]+nums[i+1]+nums[i+2];
+        }
+        return 0;
+    }
+
+```
+
+##### 1779. Find Nearest Point That Has the Same X or Y Coordinate
+You are given two integers, x and y, which represent your current location on a Cartesian grid: (x, y). You are also given an array points where each points[i] = [ai, bi] represents that a point exists at (ai, bi). A point is valid if it shares the same x-coordinate or the same y-coordinate as your location.
+
+Return the index (0-indexed) of the valid point with the smallest Manhattan distance from your current location. If there are multiple, return the valid point with the smallest index. If there are no valid points, return -1.
+
+The Manhattan distance between two points (x1, y1) and (x2, y2) is abs(x1 - x2) + abs(y1 - y2).
+
+.............................................................................................
+
+
+
+
+
