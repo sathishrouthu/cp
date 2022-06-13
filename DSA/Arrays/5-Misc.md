@@ -65,3 +65,49 @@ bool isValidPair(vector<int> &arr, int n, int k, int m)
 
 
 ```
+
+
+### Best Time to Buy and Sell Stock  (Leetcode - 121)
+
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+Input: prices = [7,1,5,3,6,4]
+
+Output: 5
+
+Solution
+
+maintain a minimum value from left side as min_buy value and at each value in the array check for the profit you're getting 
+
+if the profit is maximized by selling at current index , update the profit.
+
+
+```
+
+int maxProfit(vector<int>& prices) {
+    int min_buy = INT_MAX;
+    int profit=0;
+    for(int i=0;i<prices.size();i++){
+        min_buy = min(min_buy,prices[i]);
+        profit  = max(profit,prices[i]-min_buy);
+    }
+    return profit;
+}
+
+```
+
+FOLLOW UP :
+
+ * Best Time to Buy and Sell Stock - II
+ *  Best Time to Buy and Sell Stock - III
+
+### Non-Decreasing Array
+You have been given an integer array/list 'ARR' of size 'N'. Write a solution to check if it could become non-decreasing by modifying at most 1 element.
+
+We define an array as non-decreasing, if ARR[i] <= ARR[i + 1] holds for every i (0-based) such that (0 <= i <= N - 2).
+
+
