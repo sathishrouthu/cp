@@ -153,3 +153,102 @@ vector<int> productExceptSelf(vector<int>& nums) {
 }
 ```
 
+
+### Count all sub-arrays having sum divisible by k
+
+Given an array ‘ARR’ and an integer ‘K’, your task is to find all the count of all sub-arrays whose sum is divisible by the given integer ‘K’.
+
+*If there exists no subarray in the given sequence whose sum is divisible by ‘K’ then simply return ‘0’.*
+
+**Naive approach:**
+
+obtain sum of all posible subarrays and check for divisibility of each sub array sum
+```
+for i from 0 to n-1:
+  for j from i to n-1:
+      currsum=0;
+        for k=i to j;
+          currsum+=arr[k];
+      if(currsum%k==0)
+        count++;
+return count;
+
+```
+
+**Efficient way:**
+
+for any subarray to be divided by k => subarraySum(i,j)%k==0;
+
+subarraySum(i,j) = sum(0,j) - sum(0,i-1);
+
+subarraySum(i,j) = (q1\*k + rem1) - (q2*\k+rem2); ==> (q1-q2)*k + (rem1-rem2)
+
+so, finally if subarraysum(i,j) need to be divided by k then rem1==rem2
+
+rem1 = (arr[0]+arr[1]+.......arr[i-1])%k
+
+rem2 = (arr[0]+arr[1]+.......arr[j])%k
+
+condition :  rem1==rem2
+
+we need to find  no. of (i,j) pairs which satisfies above condition
+
+--------------------------------------------------------------------
+
+create an array say rem of size k;
+
+rem[k];  this array holds count of each reminder we get for sum upto each index in arr
+
+example : 
+
+array = [2,3,-3,4,-6,1] , k = 3
+
+cumulative sums = [2, 5, 2, 6, 0, 1]
+
+initially mod[k] = [ 0, 0, 0 ]
+```
+for i--> 0 to n-1;
+  reminder = (cumlativesum of arr upto i)%k;
+  mod[reminder]++;
+```
+mod[k] = [2,1,3]
+
+such that we got reminder 
+0 : 2 times
+1 : 1 time 
+2 : 3 times
+
+after computing mod array :
+```
+for each x in mod:
+  if(x>1)
+    count+= x*(x-1)/2;
+count += mod[0]
+
+```
+
+x*(x-1)/2 ==> we are finding no. of pairs that can be formed by x no.of elements
+
+count+=mod[0] we are also counting subarrays having reminder 0 (single elements can also be subarrays)
+
+```
+	long long subCount(long long arr[], int N, long long K)
+	{
+	    long long count=0;
+	    long long cumSum=0;
+	    int rem[K] = {0};
+	    for(int i=0;i<N;i++){
+	            cumSum+=arr[i];
+	            rem[((cumSum%K)+K)%K]++;
+              // we are taking mod twice because sum may be ngatve some times
+	       }
+	        for(int i=0;i<K;i++){
+	            if(rem[i]>1)
+	                count += (rem[i]*(rem[i]-1))/2;
+	        }
+	        count+=rem[0];
+	    return count;
+	}
+
+```
+
