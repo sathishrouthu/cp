@@ -251,4 +251,3 @@ count+=mod[0] we are also counting subarrays having reminder 0 (single elements 
 	}
 
 ```
-
