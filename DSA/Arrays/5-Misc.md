@@ -110,4 +110,39 @@ You have been given an integer array/list 'ARR' of size 'N'. Write a solution to
 
 We define an array as non-decreasing, if ARR[i] <= ARR[i + 1] holds for every i (0-based) such that (0 <= i <= N - 2).
 
+```
+find the position where the modification is needed..!
+this can be done by checking where this condition occurs arr[i]>arr[i+1] 
+there are several cases need to be checked
 
+1. if the mismatch position occurs more than once in the array return false;
+2. if the position = 0 return true
+3. if the position is in between 0 to n-2
+    check the following conditions 
+    ==> arr[pos-1] <= arr[pos+1]  
+    Ex : [ 3,4,2,8 ]
+    the mismatch position occured at i=1
+        we have to check arr[pos-1]<=arr[pos+1] such that 3<2 then only we are able to modify the array to a non-decreasing array;
+    
+    ==> arr[pos]<=arr[pos+2]
+    Ex : [ 3,4,2,8 ]
+        to make the above array non decreasing we have to change the value at pos+1 to value in between 4 and 8
+        so we have to check whether 4<=8 or not? ,  that means arr[pos]<=arr[pos+2] 
+    
+ 4. And finally if mismatch position is occured at pos==n-2 ( at the end of the array) 
+    we can cheange this last value to any max value so we can return true.
+ 
+ ```
+ ```
+bool isPossible(int *arr, int n){
+    int pos=-1;
+    for(int i=0;i<n-1;i++){
+        if(arr[i]>arr[i+1]){
+            if(pos!=-1)    return false;    // this occurs when the error position occured twice
+            pos=i;
+        }
+    }
+    return pos==-1||pos==0||pos==n-2||arr[pos-1]<=arr[pos+1]||arr[pos]<=arr[pos+2];
+}
+ 
+ ```
