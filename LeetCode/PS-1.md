@@ -169,6 +169,43 @@ The Manhattan distance between two points (x1, y1) and (x2, y2) is abs(x1 - x2) 
 
 .............................................................................................
 
+# Day-4
+
+### 202. Happy Number
+Write an algorithm to determine if a number n is happy.
+
+A happy number is a number defined by the following process:
+
+- Starting with any positive integer, replace the number by the sum of the squares of its digits.
+- Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+- Those numbers for which this process ends in 1 are happy.
+- Return true if n is a happy number, and false if not.
+
+```
+int digsum(int n){
+    int t=0,r;
+    while(n>0){
+        r=n%10;
+        t+=r*r;
+        n=n/10;
+    }
+    return t;
+}
+bool isHappy(int n) {
+    unordered_set<int> hash;
+    while(n!=1){
+        n=digsum(n);
+        // cout<<n<<"  ";
+        if(hash.find(n)==hash.end()){
+             hash.insert(n);
+        }               
+        else
+            return false;
+    }
+    return true;
+}
+
+```
 
 
 
