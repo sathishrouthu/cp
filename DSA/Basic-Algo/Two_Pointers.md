@@ -1,1 +1,154 @@
-s
+### Longest Mountain Sub Array
+
+You are given an array of 'N' integers denoting the heights of the mountains. You need to find the length of the longest subarray which has the shape of a mountain.
+
+A mountain subarray is defined as a subarray which consists of elements that are initially in ascending order until a peak element is reached and beyond the peak element all other elements of the subarray are in decreasing order.
+
+If the given array is: [1 3 1 4]. The longest mountain subarray would be 3. This is because the longest mountain is  [1 3 1] having length 3.
+
+```
+We need to findout the subarray sequence which has an 
+an increasing sequence and then , a decreasing sequence.
+
+--> so we trraverse the array from left to right
+--> then we find if there is an increasing sequence and then the length of this.
+--> after this we will find a decreasing sequence and its length is added to previous length.
+--> finally we maintain a final answer which will be updated based length we find out in previous steps.
+
+More clearly:
+
+for i--> 1 to n-1:
+    initialize count=1;
+    j = i;
+    // find increasing sequence length
+    
+    // find decreasing sequence length (if Exists )
+    
+    // update answer with count ( if needed )
+    
+    change i value to next beginning of mountain by i = j;
+    
+```
+
+```
+int longestMountain(int *arr, int n)
+{
+    int ans=0;
+    int i,j;
+    int count=0,flag;
+    if(n<3) return 0;
+    for(i=1;i<n;i++){
+        //Find increasing sequence
+        j=i;
+        flag=0;
+        count=1;
+        while(j<n && arr[j]>arr[j-1]){
+                count++;
+                j++;
+        }
+            
+        //find decreasing sequence
+        
+        if(j!=i){                               // here we are checking whether there is an increasing sequence or not find the decreasing sequence
+            while(j<n && arr[j]<arr[j-1]){
+                count++;
+                j++;    
+                flag=1;
+            }
+
+            //Find max length
+            if(flag){                           // flag will describe whether there is a decreasing sequence or not?
+                ans = max(ans,count); 
+                j--;                            // keeping the j value to last value of decreasing sequence.
+            }
+        }
+        i=j;                                    // jumping i to next beginning of the mountain
+    }
+    return ans;
+}
+
+```
+
+
+### Find All Triplets With Zero Sum
+
+You are given an array Arr consisting of n integers, you need to find all the distinct triplets present in the array which adds up to zero.
+An array is said to have a triplet {arr[i], arr[j], arr[k]} with 0 sum if there exists three indices i, j and k such that i!=j, j!=k and i!=k and arr[i] + arr[j] + arr[k] = 0.
+
+```
+1. You can return the list of values in any order. For example, if a valid triplet is {1, 2, -3}, then (2, -3, 1), (-3, 2, 1) etc is also valid triplet. 
+   Also, the ordering of different triplets can be random i.e if there are more than one valid triplets, you can return them in any order.
+2. The elements in the array need not be distinct.
+3. If no such triplet is present in the array, then return an empty list, and the output printed for such a test case will be "-1".
+
+```
+**Brute force approach:**
+
+ Find all the triplets by using 3 for loops and if sum is equal to 0 then add them to the final answer and return;
+  
+  
+**Two pointer technique**
+```
+> Sort the array
+
+> For every element in the array :
+    -- assume the current element as target ; target = arr[i];
+    -- find the pair with sum == (-target) in the remaining sorted array which starts from i+1 to n-1;
+    -- we can find this pair by using two pointer technique ( similar to two sum problem )
+```
+```
+Algorithm:
+
+1. Sort the array
+2. for i --> 0 to n-1 
+    l = i+1;
+    r = n-1;
+    while(l<r)
+        add (arr[i],arr[l],arr[r])  to final answer
+        // We need to remove duplicate triplets so we do the following
+        increment l while arr[l] == arr[l+1]
+        decrement r while arr[r] == arr[r-1]
+        increment i while arr[i] == arr[i+1]
+        
+        i++;
+        r--;
+3. return final answer; 
+        
+```
+
+
+```
+vector<vector<int>> findTriplets(vector<int>arr, int n) {
+    sort(arr.begin(),arr.end());
+    vector<vector<int>> res;
+    int l,r;
+    for(int i=0;i<n;i++){
+        l = i+1,r=n-1;
+        while(l<r){
+            if((arr[i]+arr[l]+arr[r])==0){
+                res.push_back({arr[i],arr[l],arr[r]});
+                
+                //To eliminate the duplicte triplets do the following 
+                
+                while(l<r and arr[l]==arr[l+1])
+                    l++;
+                while(l<r and arr[r]==arr[r-1])
+                    r--;
+                while(arr[i]==arr[i+1])
+                    i++;
+                
+                l++;
+                r--;
+            }
+            else if((arr[l]+arr[r])+arr[i]>0)
+                r--;
+            else
+                l++;
+        }
+    }
+    return res;
+}
+
+```
+
+
