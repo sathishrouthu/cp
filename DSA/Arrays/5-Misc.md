@@ -214,3 +214,89 @@ int lengthOfLongestConsecutiveSequence(vector<int> &arr, int n) {
 }
 
 ```
+
+
+### Second largest element in the array
+
+You have been given an array/list 'ARR' of integers. Your task is to find the second largest element present in the 'ARR'.
+
+a) Duplicate elements may be present.
+
+b) If no such element is present return -1.
+
+Ex:
+
+Input: Given a sequence of five numbers 2, 4, 5, 6, 8.
+
+Output:  6
+
+**Naive Approach:**
+- Sort the Array 
+- find second largest from end.
+
+T.C : O(n);
+
+S.C : O(1)
+
+**Two pass approach:**
+
+- first pass : traverse the array to find largets element in the array
+- seond pass : find largest element in the array by excluding first largest.
+
+```
+int findSecondLargest(int n, vector<int> &arr)
+{
+    // Write your code here.
+    int second=INT_MIN;
+    int first = arr[0];
+    for(int i:arr){
+            first=max(first,i);
+        }
+   for(int j:arr){
+       if(j!=first){
+           second=max(second,j);
+       }
+   }
+    if(second==INT_MIN)
+        return -1;
+    return second;
+}
+
+```
+
+**Efficient Way:**
+```
+
+1. Initialize the first as ARR[0]; second as INT_MIN;
+2. for i in array:
+    if i is greater than first 
+        second=first;
+        first = i;
+    if second<i<first
+        second=i;
+3. if(second==INT_MIN)
+         return -1;
+4. return second;
+  
+```
+```
+   int findSecondLargest(int n, vector<int> &arr)
+{
+    // Write your code here.
+    int first=arr[0];
+    int second = INT_MIN;
+    for(int i:arr){
+        if(i>first){
+            second = first;
+            first=i;
+        }
+        if(second<i and first>i){
+            second=i;
+        }
+        
+    }
+    if(second==INT_MIN)
+        return -1;
+    return second;
+}                 
+```
