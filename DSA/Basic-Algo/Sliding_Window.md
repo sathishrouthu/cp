@@ -54,3 +54,149 @@ If the sum equals to target return true else decrease the window size from the l
      }
 
 ```
+
+
+### Smallest Subarray With K Distinct Elements
+
+Given an array 'A' consisting of 'N' integers, find the smallest subarray of 'A' containing exactly 'K' distinct integers.
+
+If more than one such contiguous subarrays exist, consider the subarray having the smallest leftmost index.
+
+EX :
+
+IP  :  4 2 2 2 3 4 4 3 
+
+OP  : 3 5
+
+**BruteForce :**
+```
+- pick up each element as starting element
+- initialize an empty set to keep distinct values
+- for each starting elementnt find an ending such that the set size equals to k
+   start inserting elements into set and check set size
+   if set.size==k 
+        update the start and end as 
+         if(end-start < j-i )
+           start = i
+           end = j
+        break from inner loop
+   if j==n 
+     break from outer loop
+    
+- if (end-start==n)
+     return -1
+- return {start,end};
+```
+
+```
+#include<bits/stdc++.h>
+vector<int> smallestSubarrayWithKDistinct(vector<int> &arr, int k)
+{
+    int n= arr.size();
+    int start=0,end=n,j;
+    for(int i=0;i<n;i++){
+        j=i;
+        unordered_set<int> s;
+        for(j=i;j<n;j++){
+            s.insert(arr[j]);
+            if(s.size()==k){
+                if((j-i)<(end-start)){
+                    start=i;
+                    end=j;
+                }
+                break;
+            }
+        }
+     if(j==n)
+         break;
+     if(flag==1 && i<start && j<end){
+         start=i;
+         end=j;
+     }
+    }
+    if(start==0 && end==n) return {-1};
+    return {start,end};
+
+}
+
+
+
+```
+
+
+Sliding Window : 
+ - we start from left and keep on expand window until we find the k distinct elements in window
+ - when we find k distinct elements in window we shrink the window from left side inorder to find minimum length.
+ - if we never find such window then our window size at the end will be equal to n (we exhausted)
+ 
+ Ex : 
+ ```
+ given array : 1 1 3 2 1 4 5 1 1 3 3 
+ 
+ we start with window size=0
+ expand window : 
+ 
+  no. of distinct elements |  window elements
+            0              |       
+            1              |       1
+            1              |       1 1
+            2              |       1 1 3
+            3              |       1 1 3 2
+            
+here no of dist elements became 3 == k 
+so we need to shrink the window from left 
+
+  no. of distinct elements |  window elements
+            3              |       1 1 3 2
+            3              |       1 3 2
+            
+ with same no. of distinct elements we got a window of size 3 which is less than previous window size 4
+ so we update the start , end now.
+ in the same way we keep iterating over array until we exhaust the array.
+```
+```
+- initialize a map that store element and its frequency
+- two variables start=0 and end=n denotes the answer variables
+- two variables i=0 and j=0 denoting the current size of window
+- while(j<n) 
+     increase the frequency of current element arr[j];
+     while( map_size == k )
+          -- check current window size (j-i) and update start and end;
+          -- decrease the count of starting element of current window in map
+          -- if count becomes 0 then remove that element from map
+          -- i++ ( shrink the window from left )
+     j++  ( expand window to the right )
+     
+- if(end-start == n) return {-1}   //No element found
+- return {start,end};
+
+```
+
+
+
+```
+#include<bits/stdc++.h>
+vector<int> smallestSubarrayWithKDistinct(vector<int> &arr, int k)
+{
+    int n = arr.size();
+    int i=0,j=0,start=0,end=n;
+    unordered_map<int,int> m;
+    while(j<n){
+            m[arr[j]]++;
+            while(m.size()==k){
+                if( (j-i) < (end-start)){
+                    start=i;
+                    end=j;
+                }
+                m[arr[i]]--;
+                if(m[arr[i]]==0)
+                    m.erase(arr[i]);
+                i++;
+            }
+        j++;
+    }
+    if((end-start)==n)    return {-1};
+    return {start,end};
+}
+
+```
