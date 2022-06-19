@@ -200,3 +200,88 @@ vector<int> smallestSubarrayWithKDistinct(vector<int> &arr, int k)
 }
 
 ```
+
+### Three Pointer.
+
+You are given three arrays X, Y and Z of size A,B and C respectively.Also, all three arrays are sorted in non-decreasing order.
+Find i, j, k such that : 0 <= i < A, 0 <= j < B, 0 <= k < C and max(abs(X[i] - Y[j]), abs(Y[j] - Z[k]), abs(Z[k] - X[i])) is minimized.
+Your task is to return the minimum of all the max(abs(X[i] - Y[j]), abs(Y[j] - Z[k]), abs(Z[k] - X[i]))
+
+**Brute force approach :**
+
+generate all posible triplets and find the :  minimum(maximum(abs(X[i]-[Y[j]),abs(Y[j]-Z[k]),abs(X[i]-Z[k]))
+
+```
+ans = INT_MAX;
+max_dif=0;
+for i --> 0 to A
+   for j--> 0 to B
+      for k-->0 to C
+          max_diff = maximum(abs(X[i]-[Y[j]),abs(Y[j]-Z[k]),abs(X[i]-Z[k]);
+          ans = min(diff,ans);      
+return ans;
+```
+
+**Efficient way:**
+
+* In this approach, we try to minimize the difference between the maximum and minimum extracted value at each index.
+* We maintain three variable differences, minimum and maximum to store the current difference, minimum and maximum respectively for each index.
+* We maintain 3 iterators, i,j,k pointing to the start of each array X, Y and Z respectively.
+* Now, we find the values of differences, minimum and maximum for each i,j and k.
+* If we found the difference at the current indices less than the previously stored difference, we update its value.
+* Now, increment the pointer of the array which contains the minimum.
+* We increment the pointer of the array which has the minimum because our goal is to decrease the difference.
+
+```
+start with three pointer i,j,k each pointig to X,Y,Z
+for each iteration 
+ - find the max of 3 elements at current
+ - find the max of 3 elements at current
+ - find diffrenece b/w max and min and update the results
+ we have to minimize this difference to get optimal value of min difference of 3 elements
+ inorder to minimize above value we have to increase the least valueamong 3 values.
+ since the arrays are sorted we increase the pointer which has the least value among all 3;
+ ```
+ 
+ ```
+ #include<bits/stdc++.h>
+int maximum(int a, int b, int c)
+{
+   return max(max(a, b), c);
+}
+int minimum(int a, int b, int c)
+{
+   return min(min(a, b), c);
+}
+int threePointer(vector<int>& X, vector<int>& Y, vector<int>& Z)
+{   
+    int A = X.size();
+    int B = Y.size();
+    int C = Z.size();
+    int Xi,Yi,Zi;
+    int i=0,j=0,k=0,h,l;
+    int diff = INT_MAX;
+    int abs_max,ans = INT_MAX;
+    while(i<A && j<B && k<C){
+        h = maximum(X[i],Y[j],Z[k]);
+        l = minimum(X[i],Y[j],Z[k]);
+        if ( h-l < diff ){
+            diff = h-l;
+            abs_max = maximum(abs(X[i]-Y[j]),abs(Y[j]-Z[k]),abs(X[i]-Z[k]));
+            ans = min(ans,abs_max);
+        }
+        if(l==X[i]){
+            i++;
+        }
+        else if(l==Y[j])
+            j++;
+        else
+            k++;
+    }
+    return ans;    
+}
+ 
+ ```
+
+
+
