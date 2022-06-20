@@ -403,5 +403,3 @@ string shortestSubstring(string s)
 }
 ```
 
-
-
