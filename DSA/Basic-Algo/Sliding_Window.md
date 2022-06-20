@@ -283,5 +283,63 @@ int threePointer(vector<int>& X, vector<int>& Y, vector<int>& Z)
  
  ```
 
+### Shortest Substring with all characters
+
+You have been given a string 'S' which only consists of lowercase English-Alphabet letters. Your task is to find the shortest (minimum length) substring from 'S' which contains all the characters of 'S' at least once.
+
+If there are more than one substring with the shortest length, then find one which appears earlier in the string ‘S’ i.e. substring whose starting index is lowest.
+
+**Brute force approach**
+
+* count all the distinct characters in the given string and store it in the "DIST".
+* we try to generate all possible substring by using a nested for loops
+* from now generate a substring and check for
+* if the no. of characters in substring equals to the "DIST".
+* check the length of current substring and compare with previous min_length and note the starting index.
+```
+dist = distinct characters.
+start=0;
+min_length = INT_MAX;
+for i-->0 to n-1
+  Set = {};
+  for j-->i to n-1
+     Set.insert(str[j]);
+     if (Set.size()==dist)
+         if( j-i < min_length )
+               min_length = j-i;
+               start = i;
+return str.substr(start,minlength+1);
+
+```
+
+```
+#include<bits/stdc++.h>
+string shortestSubstring(string s)
+{
+    // Write your code here.
+    int n = s.length();
+    unordered_set<char> Set;
+    for( char i : s)
+        Set.insert(i);
+    int dist = Set.size();
+    int start,min_length=INT_MAX;
+    for(int i=0;i<n;i++){
+        Set = {};
+        for(int j=i;j<n;j++){
+            Set.insert(s[j]);
+            if(Set.size()==dist){
+                if(j-i < min_length){
+                    start = i;
+                    min_length = j-i;
+                }
+            }
+        }
+    }
+    return s.substr(start,min_length+1);
+    
+}
+
+```
+
 
 
