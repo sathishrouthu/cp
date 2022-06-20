@@ -341,5 +341,67 @@ string shortestSubstring(string s)
 
 ```
 
+**Efficient Approach**
+```
+- Use two pointers i and j to keep a window as substring and then we use this window to satisfy our conditions
+
+- initialize a hash set (freq) of <char,int> to keep track of no.of dist characters in our window.
+- there are two main operations to be performed on window:
+=> expand window : increase freq of new character of window in hashset and j++;
+=> shrink window : decrease freq of starting character of window in hashset and i++;
+
+- we expand the window until we find a substring that contains all characters of whole string.
+- if we find such substring we update the results and  try to shrink the window to get minimum length.
+
+```
+
+```
+- count no. of distinct characters in given string by using a set and store it in distinct.
+- Initialize empty hashset
+- Initialize i=0,j=0,start=0,min_length = n;
+- while(j<n)
+     freq[str[j]]++;
+     while(freq.size()==distinct)
+           if(j-i < min_length)
+                min_length = j-i
+                start=i
+           freq[str[i]]--;
+           if(freq[s[i]]==0)
+               freq.erase(s[i])
+           i++;
+     j++
+- return str.substr(start,min_length+1);     
+```
+
+```
+#include<bits/stdc++.h>
+string shortestSubstring(string s)
+{
+    int n = s.length();
+    int start = 0,i=0,j=0,min_length = n;
+    unordered_set<int> Set;
+    for(char i:s)
+        Set.insert(i);
+    int dist = Set.size();
+    unordered_map<char,int> freq;
+    int count=0;
+    while(j<n){
+        freq[s[j]]++;
+        while(freq.size()==dist){
+            if(j-i < min_length){
+                min_length = j-i;
+                start = i;
+            }
+            freq[s[i]]--;
+            if(freq[s[i]]==0)
+                freq.erase(s[i]);
+            i++;
+        }
+        j++;
+    }
+    return s.substr(start,min_length+1);
+}
+```
+
 
 
