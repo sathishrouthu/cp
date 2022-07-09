@@ -78,4 +78,72 @@ and wants to know what will be the Kth child in his Nth generation. Can you help
 The generation tree starts with a male member i.e. Aakash. 
 Every member has exactly two children. 
 ```
+**Observations from the problem:**
+1. Every generation starts with a "Male" gender : if k==1 or n==1 then Gender = Male; ==> Base case
+2. if the child is the first child of parent then he is same gender as parent
+3. else the child gender is opposite to the parent's gender.
+4. to find gender of kth child in nth generation we have to find his parent' gender
+5. if child is kth child in nth generation then parent will be (k+1)/2 th child in (n-1)th generation.
+
+```
+To check whether the child is first child to parent or not:
+we need to check if k is odd or not 
+if k==1 or k==3 or k==5 or ...  then he is first child
+```
+
+```
+string kthChildNthGeneration(int n, long long int k)
+{
+    if(n==1 || k==1)
+        return "Male";
+    long long int par=(k+1)/2;
+    string parGen = kthChildNthGeneration(n-1,par);
+    if( k%2 !=0 ){                    // checking first child or not
+        return parGen;
+    }
+    else
+        return (parGen == "Male")?"Female":"Male";
+}
+
+```
+
+### Return Subsets Sum to K
+
+Given an integer array 'ARR' of size 'N' and an integer 'K', return all the subsets of 'ARR' which sum to 'K'.
+
+Subset of an array 'ARR' is a tuple that can be obtained from 'ARR' by removing some (possibly all) elements of 'ARR'.
+
+```
+Example:
+arr = 2 4 6
+k = 6
+
+ans = {2,4} , {6}
+
+For the array'ARR' = {2, 4, 6}, we can have subsets {}, {2}, {4}, {6}, {2, 4}, {2, 6}, {4, 6}, {2, 4, 6}. Out of these 8 subsets, {2, 4} and {6} sum to the given 'K' i.e. 6.
+
+```
+
+```
+void findSub(int i,int sum,vector<int>& ds,vector<int> arr,vector<vector<int>>& ans){
+    if(i==arr.size()){
+        if(sum == 0)
+            ans.push_back(ds);
+        return;
+    }
+    ds.push_back(arr[i]);
+    findSub(i+1,sum-arr[i],ds,arr,ans);
+    ds.pop_back();
+    findSub(i+1,sum,ds,arr,ans);
+}
+
+vector<vector<int>> findSubsetsThatSumToK(vector<int> arr, int n, int k)
+{
+    vector<int> ds;
+    vector<vector<int>> ans;
+    findSub(0,k,ds,arr,ans);
+    return ans;
+}
+
+```
 
