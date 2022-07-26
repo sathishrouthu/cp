@@ -125,4 +125,68 @@ vector<int> sortBinaryArray(vector<int> arr, int n)  {
     return arr;
 }
 ```
+### Relative Sorting
+
+Given two arrays ‘ARR’ and ‘BRR’ of size ‘N’ and ‘M’ respectively. Your task is to sort the elements of ‘ARR’ in such a way that the relative order among the elements will be the same as those are in ‘BRR’. For the elements not present in ‘BRR’, append them in the last in sorted order.
+```
+Ex: 
+Consider the arrays as ARR = { 9, 5, 8, 4, 6, 5 } and BRR = { 8, 4, 5 }
+The output for the above example  is { 8, 4, 5, 5, 6, 9 }.
+```
+Elements of ‘BRR’ are non repeating.
+
+**Solution** :
+The above problem can be solved by using a map to count each element in ARR.
+first we count th frequency of each element in ARR.
+then we traverse the BRR one by one
+for each element in BRR we take it into answer no. of times it occured in ARR.
+```
+example  :  ARR = { 3,2,4,1,4,3,2,5,1,3,2 }
+            BRR = { 2,1,4 }
+            
+     Count frequency :
+                   {    3 : 3,
+                        2 : 3,
+                        4 : 2,
+                        1 : 2,
+                        5 : 1  }
+     Initialize Answer = {};
+     for x in BRR :
+        add x to Answer freq[x] no. of times.
+        remove x from freq.
+     if freq.size()!=0  ( remaining elements )
+        add them to answer in the same way as above.            
+```
+```
+#include<bits/stdc++.h>
+vector<int> relativeSorting(vector<int> &arr, vector<int> &brr, int n, int m)
+{
+    unordered_map<int,int> mp;
+    for(int i : arr)
+        mp[i]++;
+    vector<int> v;
+    for(int x : brr){
+        while(mp[x]>0){
+            mp[x]--;
+            v.push_back(x);
+        }
+        mp.erase(x);
+    }
+    vector<int> rem;
+    if(mp.size()!=0)
+    for(auto p : mp){
+        while(mp[p.first]!=0){
+            rem.push_back(p.first);
+            mp[p.first]--;
+        }
+    }
+    sort(rem.begin(),rem.end());
+    for(int i: rem)
+        v.push_back(i);
+    return v;
+}
+```
+
+
+### Min no. of swaps required to sort an array
 
