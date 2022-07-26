@@ -101,6 +101,13 @@ You are given a binary array "arr" of size ‘N’. Your task is to sort the giv
 Expected space comlexity: O(1)
 Expected time complexity: O(n)
 
+as we are having only 0s and ones.
+we can sort this by swapping the elements internally in such a way that all 0s comes to front and 1s goes to back.
+1. take two pointer i and j .. i points to 0s and j points to 1s
+2. move i forward until you encounters a 1, move j backward until you enounter a 0,
+3. if i<j that means there are some elements in between them , ==> swap arr[i] and arr[j] and i++ , j--
+4. do thish until i crosses j.
+
 ```
 vector<int> sortBinaryArray(vector<int> arr, int n)  {
     int i=0,j=n-1;
