@@ -1,3 +1,5 @@
+```
+
 #include<bits/stdc++.h>
 class LRUCache
 {
@@ -72,3 +74,6 @@ public:
         mp[key] = head->next;
     }
 };
+
+
+```
