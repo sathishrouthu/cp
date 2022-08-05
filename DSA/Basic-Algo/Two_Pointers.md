@@ -177,7 +177,7 @@ find all the possible pairs and find max  area among all areas calculated
 maxarea=0;
 for i --> 0 to n-1:
     for j-->i+1 to n-1:
-        area = (j-i)\*min(arr[i]\*arr[j]);
+        area = (j-i)*min(arr[i]*arr[j]);
         maxarea= max(area,maxarea);
 return maxarea;
         
