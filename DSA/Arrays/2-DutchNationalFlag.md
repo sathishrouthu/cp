@@ -14,7 +14,7 @@ Given an array consisting of only 0s, 1s and 2s, sort the array.
 * The mid pointer denotes the current element, traverses the array while mid<=high i.e we have exhausted the search space for the range which can contain any of 0s, 1s, or 2s.
 1. If A[mid] == 0, swap A[mid] and A[low] and increment low and mid pointers by 1.
 2. If A[mid] == 1, increment the mid pointer by 1.
-3. If A[mid] == 2, swap A[high] and A[mid] and increment mid by 1 and decrement high by 1.
+3. If A[mid] == 2, swap A[high] and A[mid] , decrement high by 1.
 4. The resulting array will be a sorted array containing 0s, 1s, and 2s.
 
 ```
