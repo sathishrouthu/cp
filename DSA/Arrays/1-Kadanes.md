@@ -57,10 +57,12 @@ return (ones+maxSum);
 
 Problem:
 #### Maximum subarray sum after K concatenation
+```
 You have been given a vector/list 'ARR' consisting of ‘N’ integers. You are also given a positive integer ‘K’.
-Let’s define a vector/list 'CONCAT' of size 'N * K' formed by concatenating 'ARR' ‘K’ times. For example, if 'ARR' = [0, -1, 2] and 'K' = 3, then 'CONCAT' is given by [0, -1, 2, 0, -1, 2, 0, -1, 2].
+Let’s define a vector/list 'CONCAT' of size 'N * K' formed by concatenating 'ARR' ‘K’ times.
+For example, if 'ARR' = [0, -1, 2] and 'K' = 3, then 'CONCAT' is given by [0, -1, 2, 0, -1, 2, 0, -1, 2].
 Your task is to find the maximum possible sum of any non-empty subarray (contagious) of 'CONCAT'.
-
+```
 Naive:
 - We will loop from 0 to ‘N * K’ (loop variable ‘i’).
 - We initialize ‘CUR_SUM’ (to store sum of prefix elements) to 0 and ‘MAX_SUM’ (to store maximum subarray sum) to the minimum possible value.
