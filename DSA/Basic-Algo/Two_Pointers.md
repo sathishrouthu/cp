@@ -104,7 +104,8 @@ Algorithm:
     l = i+1;
     r = n-1;
     while(l<r)
-        add (arr[i],arr[l],arr[r])  to final answer
+        if((arr[i]+arr[l]+arr[r])==0)
+            add (arr[i],arr[l],arr[r])  to final answer;
         // We need to remove duplicate triplets so we do the following
         increment l while arr[l] == arr[l+1]
         decrement r while arr[r] == arr[r-1]
