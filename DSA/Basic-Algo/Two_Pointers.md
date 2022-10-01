@@ -227,6 +227,100 @@ int maxArea(vector<int>& height) {
 
 ```
 
+### Trapping Rainwater
+
+42. Trapping Rain Water
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+![image](https://user-images.githubusercontent.com/93826731/193379772-476a4438-78da-4af8-9765-42bed69ab953.png)
+
+```
+Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. 
+In this case, 6 units of rain water (blue section) are being trapped.
+```
+
+**Brute force :**
+```
+At each index we need to findout how much water we can store after rain.
+for example if we have an array like  : 
+
+1  2  1  3  0  4  2
+
+at index 0 : 0 units of water
+at index 1 : 0 units of water
+at index 2 : 1 unit of water 
+at index 3 : 0 units
+at index 4 : 3 units
+at index 5 : 0 units 
+at index 6 : 0 units
+
+formula is simple :  
+at each index we need to have two values leftmax value and right max value
+units of water that can be trapped at index i : Min (leftmax,rightmax) - height[i];
+
+Approach 2 : 
+compute prefix and suffix array that tells the leftmax and right max :
+for  an array like : [ 1  2  1  3  0  4  2 ]
+prefix = [ 1, 2, 2, 3, 3, 3, 3 ]
+suffix = [ 4, 4, 4, 4, 4, 4, 2 ]
+
+at  index i :
+leftmax  = prefix[i]
+rightmax = suffix[i]
+
+
+Optimal Approach :
+
+Using two pointers : 
+
+1. initialize following :
+    leftmax = rightmax = 0;
+    l=0, r = n-1;
+    result = 0;
+2. while l<r :
+    if height[l] <= height[r]               // that means for sure we have a rightmax to the index l 
+        if(leftmax <= height[l]             // but we do not have a leftmax for index l
+            leftmax = height[l];
+        else                                // we have leftmax also
+            res += leftmax - height[l];
+    else                                    // we do not have a right max for index l but we have a leftmax for index r
+        if(rightmax<height[r] )             // we do not have a rightmax for index r
+            rightmax = height[r];
+        else                                //we have rightmax also.
+            res+=rightmax-height[r];        
+
+3. return res;
+
+```
+
+```
+int trap(vector<int>& height) {
+    int leftmax=0,rightmax=0,l=0,r=height.size()-1;
+    int res=0;
+
+    while(l<r){
+        if(height[l]<=height[r]){
+            if(height[l]>=leftmax)
+                leftmax = height[l];
+            else
+                res+=leftmax-height[l];
+            l++;
+        }
+        else{
+            if(height[r]>=rightmax)
+                rightmax = height[r];
+            else
+                res+=rightmax-height[r];
+            r--;
+        }
+    }
+    return res;
+}
+```
+
 ### Sum of Two Elements Equals the Third.
 
 You are given an array Arr consisting of n integers, you need to find a valid triplet as explained below.
