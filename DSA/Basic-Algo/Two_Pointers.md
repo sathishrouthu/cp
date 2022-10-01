@@ -286,11 +286,14 @@ Using two pointers :
             leftmax = height[l];
         else                                // we have leftmax also
             res += leftmax - height[l];
+        l++;
     else                                    // we do not have a right max for index l but we have a leftmax for index r
         if(rightmax<height[r] )             // we do not have a rightmax for index r
             rightmax = height[r];
         else                                //we have rightmax also.
-            res+=rightmax-height[r];        
+            res+=rightmax-height[r];
+        r--;
+            
 
 3. return res;
 
