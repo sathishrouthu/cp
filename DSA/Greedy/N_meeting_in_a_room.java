@@ -53,7 +53,10 @@ class MyComparator implements Comparator<meeting>{
         return 1;
     }
 }
-public class Solution {
+public class N_meeting_in_a_room{
+
+}
+class Solution {
     public static List<Integer> maximumMeetings(int[] start, int[] end) { 
         List<meeting> meets = new ArrayList<>();
         for(int i=0;i<start.length;i++){
