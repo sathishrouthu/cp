@@ -1,4 +1,5 @@
- ## Kadane's Algo:
+## Kadane's Algo:
+
 ```
 Given an array of N integers a1,a2,a3,....., aN find the maximum subarray(non-empty) sum of the given array.
 
@@ -7,6 +8,7 @@ Array A[] = [-1, 2, -2, 5, 7, -3, 1]
 Maximum subarray sum -> 12
 Subarray(0-Based indexed) from index 1 to 4 -> [2, -2, 5, 7] and subarray(0-Based indexed) from index 3 to 4 -> [5, 7] have sum 12.
 ```
+
 ```
 
 	long long Curr_sum=0,maxSum=-99999999;
@@ -16,11 +18,13 @@ Subarray(0-Based indexed) from index 1 to 4 -> [2, -2, 5, 7] and subarray(0-Base
         Curr_sum = Curr_sum<0?0:Curr_sum;
 	}
 	return maxSum>0?maxSum:0;
-  
+
 ```
 
 Problem:
+
 #### Flip Bits
+
 You are given an array of integers ARR[] of size N consisting of zeros and ones. You have to select a subset and flip bits of that subset. You have to return the count of the maximum one’s that you can obtain by flipping chosen sub-array at most once.
 A flip operation is one in which you turn 1 into 0 and 0 into 1.
 Ex :
@@ -33,10 +37,10 @@ such that if we find a sub-array that has more no. of ones than no. of zeros the
 to get such a sub-array, we need to consider 0 as +1 and 1 as -1 then we can simply find the max sum sub-array ( which has more no. of 0s than the no. of 1s )
 
 from the above step, we will get max no. of ones we can get max sum sub-array which is nothing but max no. of ones that we can get by flipping a sub array.
-but the solution is to find the max number of ones in the array at end. we just add the max sum to the initial no. of ones existed in the array. 
-
+but the solution is to find the max number of ones in the array at end. we just add the max sum to the initial no. of ones existed in the array.
 
 my Approach:
+
 1. count no. of ones in the given array
 2. in the given array change 0 to +1 and 1 to -1
 3. now find out the max subarray sum in the array (kadane's algo)
@@ -47,7 +51,7 @@ int ones = 0;
 for(int i=0;i<n;i++){
 	if(arr[i]==1){
 	    ones+=1;
-	    arr[i]=-1;   
+	    arr[i]=-1;
 	}
 	else
     		arr[i]=1;
@@ -61,20 +65,23 @@ for(int i=0;i<n;i++){
 	}
 maxSum = maxSum>0?maxSum:0;
 return (ones+maxSum);
-    
+
 ```
 
-
 Problem:
+
 #### Maximum subarray sum after K concatenation
+
 ```
 You have been given a vector/list 'ARR' consisting of ‘N’ integers. You are also given a positive integer ‘K’.
 Let’s define a vector/list 'CONCAT' of size 'N * K' formed by concatenating 'ARR' ‘K’ times.
 For example, if 'ARR' = [0, -1, 2] and 'K' = 3, then 'CONCAT' is given by [0, -1, 2, 0, -1, 2, 0, -1, 2].
 Your task is to find the maximum possible sum of any non-empty subarray (contagious) of 'CONCAT'.
 ```
+
 Naive:
-- We will loop from 0 to ‘N * K’ (loop variable ‘i’).
+
+- We will loop from 0 to ‘N \* K’ (loop variable ‘i’).
 - We initialize ‘CUR_SUM’ (to store sum of prefix elements) to 0 and ‘MAX_SUM’ (to store maximum subarray sum) to the minimum possible value.
 - For each iteration, we will-
 - Add ‘ARR[i % N]’ to ‘CUR_SUM’’.
@@ -83,23 +90,25 @@ Naive:
 - Finally, we return ‘MAX_SUM’ as our answer.
 
 Optimal:
+
 - If K = 1-
-	We simply apply Kadane’s algorithm and return the maximum sum.
-- Else, 
-	we find the sum of elements (‘ARR_SUM'). Now there are two cases-
+  We simply apply Kadane’s algorithm and return the maximum sum.
+- Else,
+  we find the sum of elements (‘ARR_SUM'). Now there are two cases-
+
 * If 'ARR_SUM' <= 0
-	Then, we will find the maximum subarray sum for ‘K’ = 2 irrespective of value of ‘K’ and return it as answer.
+  Then, we will find the maximum subarray sum for ‘K’ = 2 irrespective of value of ‘K’ and return it as answer.
 
 this is because if the total sum is negative then it will always reduce the max sum for example :
 take arr = [ -2,0,-8,9 ] in this array, total sum = -1;
 if we concatenate this any no. of times, we will get the same result as max sum for k=2;
- for k = 2  :  [ -2 0 -8 9 -2 0 -8 9 ] 
+for k = 2 : [ -2 0 -8 9 -2 0 -8 9 ]
 
-* If 'ARR_SUM' > 0
-	Then, we will find the maximum subarray sum for K = 2 and we return ‘MAX_SUBARRAY_SUM’ plus (K-2) times ‘ARR_SUM' as the answer.
+- If 'ARR_SUM' > 0
+  Then, we will find the maximum subarray sum for K = 2 and we return ‘MAX_SUBARRAY_SUM’ plus (K-2) times ‘ARR_SUM' as the answer.
 
- if arr sum > 0 then we can multiply it k-2 times as it will increase the max sub-array sum.
- 
+if arr sum > 0 then we can multiply it k-2 times as it will increase the max sub-array sum.
+
 ```
 long long maxSubSumKConcat(vector<int> &arr, int n, int k)
 {
@@ -116,5 +125,63 @@ long long maxSubSumKConcat(vector<int> &arr, int n, int k)
     else
         return maxsum+sum*(k-2);
 }
+
+```
+
+Problem :
+
+You are given a matrix 'ARR' with 'N' rows and 'M' columns. Your task is to find the maximum sum rectangle in the matrix. Maximum sum rectangle is a rectangle with the maximum value for the sum of integers present within its boundary, considering all the rectangles that can be formed from the elements of that matrix.
+
+ex :
+
+```
+1  2 -1 -4 -20
+
+-8 -3  4  2  1
+
+3  8  10  1  3
+
+-4 -1  1  7  6
+```
+
+the rectangle (1,1) to (3,3) has maxSum of 29.
+
+Solution :
+
+Kadane’s algorithm for 1D array can be used to reduce the time complexity to O(n^3). The idea is to fix the left and right columns one by one and find the maximum sum contiguous rows for every left and right column pair. We basically find top and bottom row numbers (which have maximum sum) for every fixed left and right column pair. To find the top and bottom row numbers, calculate the sum of elements in every row from left to right and store these sums in an array say temp[]. So temp[i] indicates sum of elements from left to right in row i. If we apply Kadane’s 1D algorithm on temp[], and get the maximum sum subarray of temp, this maximum sum would be the maximum possible sum with left and right as boundary columns. To get the overall maximum sum, we compare this sum with the maximum sum so far.
+
+```
+
+#include <bits/stdc++.h>
+int kadanes(vector<int>& arr,int n){
+	int currsum = 0;
+	int ans  = arr[0];
+	for(int i=0;i<n;i++){
+		currsum += arr[i];
+		ans = max(currsum,ans);
+		currsum = currsum > 0?currsum:0;
+	}
+	return ans;
+}
+int maxSumRectangle(vector<vector<int>>& arr, int n, int m)
+{
+	int row = n;
+	int col = m;
+	int maxSum = INT_MIN;
+
+	for(int left=0;left<col;left++){
+		vector<int> temp(row,0);
+		for(int right = left;right<col;right++){
+			for(int i=0;i<row;i++)
+				temp[i] += arr[i][right];
+
+			int sum = kadanes(temp,row);
+			maxSum = max(sum,maxSum);
+		}
+	}
+	return maxSum;
+}
+
+
 
 ```
