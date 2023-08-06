@@ -1,4 +1,4 @@
-## Kadane's Algo:
+ ## Kadane's Algo:
 ```
 Given an array of N integers a1,a2,a3,....., aN find the maximum subarray(non-empty) sum of the given array.
 
@@ -89,9 +89,17 @@ Optimal:
 	we find the sum of elements (‘ARR_SUM'). Now there are two cases-
 * If 'ARR_SUM' <= 0
 	Then, we will find the maximum subarray sum for ‘K’ = 2 irrespective of value of ‘K’ and return it as answer.
+
+this is because if the total sum is negative then it will always reduce the max sum for example :
+take arr = [ -2,0,-8,9 ] in this array, total sum = -1;
+if we concatenate this any no. of times, we will get the same result as max sum for k=2;
+ for k = 2  :  [ -2 0 -8 9 -2 0 -8 9 ] 
+
 * If 'ARR_SUM' > 0
 	Then, we will find the maximum subarray sum for K = 2 and we return ‘MAX_SUBARRAY_SUM’ plus (K-2) times ‘ARR_SUM' as the answer.
-	
+
+ if arr sum > 0 then we can multiply it k-2 times as it will increase the max sub-array sum.
+ 
 ```
 long long maxSubSumKConcat(vector<int> &arr, int n, int k)
 {
