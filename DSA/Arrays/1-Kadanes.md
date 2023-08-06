@@ -32,6 +32,10 @@ in the chosen sub array the value of (no. of zeros - no. of ones) should be max;
 such that if we find a sub-array that has more no. of ones than no. of zeros then we can flip that sub-array;
 to get such a sub-array, we need to consider 0 as +1 and 1 as -1 then we can simply find the max sum sub-array ( which has more no. of 0s than the no. of 1s )
 
+from the above step, we will get max no. of ones we can get max sum sub-array which is nothing but max no. of ones that we can get by flipping a sub array.
+but the solution is to find the max number of ones in the array at end. we just add the max sum to the initial no. of ones existed in the array. 
+
+
 my Approach:
 1. count no. of ones in the given array
 2. in the given array change 0 to +1 and 1 to -1
