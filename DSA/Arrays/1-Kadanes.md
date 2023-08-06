@@ -21,15 +21,21 @@ Subarray(0-Based indexed) from index 1 to 4 -> [2, -2, 5, 7] and subarray(0-Base
 
 Problem:
 #### Flip Bits
-You are given an array of integers ARR[] of size N consisting of zeros and ones. You have to select a subset and flip bits of that subset. You have to return the count of maximum one’s that you can obtain by flipping chosen sub-array at most once.
+You are given an array of integers ARR[] of size N consisting of zeros and ones. You have to select a subset and flip bits of that subset. You have to return the count of the maximum one’s that you can obtain by flipping chosen sub-array at most once.
 A flip operation is one in which you turn 1 into 0 and 0 into 1.
 Ex :
-If you are given an array {1, 1, 0, 0, 1} then you will have to return the count of maximum one’s you can obtain by flipping anyone chosen sub-array at most once, so here you will clearly choose sub-array from the index 2 to 3 and then flip it's bits. So, the final array comes out to be {1, 1, 1, 1, 1} which contains five ones and so you will return 5.
+If you are given an array {1, 1, 0, 0, 1} then you will have to return the count of maximum one’s you can obtain by flipping anyone chosen sub-array at most once, so here you will clearly choose a sub-array from the index 2 to 3 and then flip its bits. So, the final array comes out to be {1, 1, 1, 1, 1} which contains five ones and so you will return 5.
+
+Intuition :
+when we choose a subarray and flip it, for the zeros we gain +1 and for ones we lose -1 ( the count of 1 bits );
+in the chosen sub array the value of (no. of zeros - no. of ones) should be max;
+such that if we find a sub-array that has more no. of ones than no. of zeros then we can flip that sub-array;
+to get such a sub-array, we need to consider 0 as +1 and 1 as -1 then we can simply find the max sum sub-array ( which has more no. of 0s than the no. of 1s )
 
 my Approach:
-1. count no. of ones in given array
+1. count no. of ones in the given array
 2. in the given array change 0 to +1 and 1 to -1
-3. now findout the maxsubarray sum in the array (kadane's algo)
+3. now find out the max subarray sum in the array (kadane's algo)
 4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3).
 
 ```
