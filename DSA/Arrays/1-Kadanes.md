@@ -128,6 +128,8 @@ long long maxSubSumKConcat(vector<int> &arr, int n, int k)
 
 ```
 
+### Max Sum Rectangle
+
 Problem :
 
 You are given a matrix 'ARR' with 'N' rows and 'M' columns. Your task is to find the maximum sum rectangle in the matrix. Maximum sum rectangle is a rectangle with the maximum value for the sum of integers present within its boundary, considering all the rectangles that can be formed from the elements of that matrix.
