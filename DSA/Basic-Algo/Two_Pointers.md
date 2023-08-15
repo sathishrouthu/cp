@@ -264,7 +264,7 @@ units of water that can be trapped at index i : Min (leftmax,rightmax) - height[
 Approach 2 : 
 compute prefix and suffix array that tells the leftmax and right max :
 for  an array like : [ 1  2  1  3  0  4  2 ]
-prefix = [ 1, 2, 2, 3, 3, 3, 3 ]
+prefix = [ 1, 2, 2, 3, 3, 4, 4 ]
 suffix = [ 4, 4, 4, 4, 4, 4, 2 ]
 
 at  index i :
