@@ -1,4 +1,4 @@
-class Solution {
+public class BinarySearch {
     public int search(int[] nums, int target) {
         int  l=0,h=nums.length-1;
         while(l<=h){
