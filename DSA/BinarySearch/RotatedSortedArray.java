@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 
 
-public class SearchInRotatedSortedArray {
+public class RotatedSortedArray {
 
 
 /*
@@ -74,5 +74,45 @@ public class SearchInRotatedSortedArray {
         }
         return false;
     }
-    
+
+    /*
+     * 
+     * Find Minimum in Rotated Sorted Array
+     * we maintain an answer variable mini;
+     * at each time we compare the left most value in the sorted array with the mini and update based on it's value;
+     * we will find out the sorted part of the rotated sorted array with same logic in previous problems 
+     * 
+     * if(arr[mid]>=arr[low])   // left part is sorted
+     * if(arr[mid]<=arr[high])  // right part is sorted
+     * 
+     * Further Optimization:
+     *  at some point if(arr[low]<=arr[high]) then it means that the entire array is sorted, 
+     *  take the left most value and compare with and exit.
+     * 
+     */
+    public static int findMin(int []arr) {
+        int l = 0;
+        int h = arr.length-1;
+        int ans = arr[0];
+        while(l<=h){
+            int mid = l+(h-l)/2;
+            if(arr[l]<=arr[h]) return Math.min(ans,arr[l]);
+            if(arr[l]<=arr[mid]){
+                ans = Math.min(ans,arr[l]);
+                l=mid+1;
+            }
+            else{
+                ans = Math.min(ans,arr[mid]);
+                h=mid-1;
+            }
+        }
+        return ans;
+    }
+    /*
+     *  Above question can be asked like : find out how many times does an array has been rotated.
+     *  answer is the index of the minimum value in the array.
+     */
+
+
+
 }
