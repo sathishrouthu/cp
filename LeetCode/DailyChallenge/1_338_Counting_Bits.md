@@ -24,6 +24,7 @@ Explanation:
 4 --> 100
 5 --> 101
 ```
+```
 if we clearly observe the i and it's binary representations : 
 
 i    binary    set bits
@@ -37,7 +38,7 @@ i    binary    set bits
 6      110      2
 7      111      3
 8      1000     1
-
+```
 ```
 Let if we have X and Y in such a way that,
 X/2 = Y
