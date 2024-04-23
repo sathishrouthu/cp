@@ -65,6 +65,36 @@ vector<int> sumInRanges(vector<int> &arr, int n, vector<vector<long long>> &quer
     return v;
 }
 
+
+// Java code
+
+public class Solution {
+    private static int mod = (int)1e9+7;
+    public static List<Integer> sumInRanges(int[] arr, int n, List<List<Long>> queries, int q) {
+        List<Integer> result = new ArrayList<>();
+        
+        long prefix[] = new long[n+1];
+        prefix[0] = 0;
+        for(int i=1;i<=n;i++){
+            prefix[i] =( prefix[i-1]+arr[i-1]) %mod;
+        }
+        for(List<Long> query : queries){
+            long L = query.get(0);
+            long R = query.get(1);
+            long leftSum = sumUpto(prefix, L-1, n);
+            long rightSum = sumUpto(prefix, R, n);
+            int ans =(int) ((rightSum - leftSum + mod) % mod);
+            result.add(ans);
+        }
+        return result;
+    }
+    private static long sumUpto(long prefix[], long index, long n) {
+         long count = (index / n) % mod;
+         long res = (count * prefix[(int) n]) % mod;
+         res = (res + prefix[(int) (index % n)]) % mod;
+         return res;  
+    } 
+}
 ```
 
 ### Product of array except itself (238 Leetcode)
