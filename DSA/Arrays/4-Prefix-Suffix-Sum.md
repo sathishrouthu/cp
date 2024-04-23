@@ -158,7 +158,7 @@ above loop will calculate the product[i] = product of all elements upto to i-1;
 ```
 now again intitialize temp=1
 for each index i from n-1 to 0:
-  prod[i] = temp;
+  prod[i] *= temp;
   temp*=arr[i];
 ```
   
@@ -181,6 +181,27 @@ vector<int> productExceptSelf(vector<int>& nums) {
     }
     return prod;
 }
+
+// JAVA
+
+ public static int[] getProductArrayExceptSelf(int[] arr) {
+        int n = arr.length;
+        int res[] = new int[n];
+        if(n<1) return res;
+        int MOD = (int)1e9+7;
+        int temp = 1;
+        int prod[] = new int[n];
+        for(int i=0;i<n;i++){
+            prod[i] = temp;
+            temp = (int) ((long)temp*arr[i]%MOD);
+        }
+        temp = 1;
+        for(int i = n-1;i>=0;i--){
+            prod[i] = (int)((long) prod[i]*temp%MOD);
+            temp    =   (int) ((long)temp*arr[i]%MOD);
+        }
+        return prod;
+    }
 ```
 
 
@@ -279,5 +300,22 @@ count+=mod[0] we are also counting subarrays having reminder 0 (single elements 
 	        count+=rem[0];
 	    return count;
 	}
+// Java code
+    public static int subArrayCount(ArrayList < Integer > arr, int k) {
+        long preSum = 0;
+        int count = 0;
+        int mod[] = new int[k];
+        for(int i=0;i<arr.size();i++) {
+            preSum += arr.get(i);
+            mod[(int) ((preSum%k)+k)%k ]++;
+	// we are taking mod twice because sum may be ngatve some times   
+        }
+        for(int x : mod){
+            if(x>1)
+            count+= (x*(x-1))/2;
+        }
+        count+= mod[0];
+        return count;
+    }
 
 ```
