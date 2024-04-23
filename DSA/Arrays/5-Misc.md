@@ -8,17 +8,15 @@ Your task is to return the list of all pairs of elements such that each sum of e
 - Return the list of pairs sorted in non-decreasing order of their first value. In case if two pairs have the same first value, the pair with a smaller second value should come first.
 
 ```
-vector<vector<int>> pairSum(vector<int> &arr, int s){
-    sort(arr.begin(),arr.end());
-    vector<vector<int>> result;
-    for(int i=0;i<arr.size();i++){
-        int comp = s-arr[i];
-        vector<int> pair(2);
-        for(int j=i+1;j<arr.size();j++){
-            if(arr[j]==comp){
-                pair[0] = arr[i]<arr[j]?arr[i]:arr[j];
-                pair[1] = s-pair[0];
-                result.push_back(pair);
+public static List<int[]> pairSum(int[] arr, int s) {
+    int n = arr.length;
+    List<int[]> result = new ArrayList<>();
+    Arrays.sort(arr);
+    for(int i = 0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            if(arr[i]+arr[j]==s){
+                int[] temp = {arr[i],arr[j]};
+                result.add(temp);
             }
         }
     }
@@ -33,6 +31,9 @@ Ex:
 If the given array is [2, 1, 5, 7] and K = 9 and M = 3. Then you need to return true because we can divide the array into two pairs, i.e (2, 1) and (5, 7) whose sums are 3 and 12, which when divided by 9 gives remainder 3, thus it is possible to divide the given array into pairs.  
 
 * Every element of the array should contribute to only one pair, i.e if the array is [3, 0, 0] and K = 2 and M = 1, then you need to return false, as element 3 will make a pair with any one of the 0. 
+
+
+
 
 ```
 #include<bits/stdc++.h>
