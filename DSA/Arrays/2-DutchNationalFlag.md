@@ -19,24 +19,26 @@ Given an array consisting of only 0s, 1s and 2s, sort the array.
 
 ```
 
-void sort012(int *arr, int n)
-{
-    int low=0,mid=0,high=n-1;
-    while(mid<=high)
-    {
+public static void sort012(int[] arr){
+    int low = 0;
+    int mid=0;
+    int high = arr.length-1;
+    while(mid<=high){
         if(arr[mid]==0){
-            swap(arr[mid],arr[low]);
-            low++;
+            arr[mid] = arr[low];
+            arr[low]=0;
+            low++; 
             mid++;
         }
-        else if(arr[mid]==1)
+        else if(arr[mid]==1){
             mid++;
-        else if(arr[mid]==2){
-            swap(arr[mid],arr[high]);
+        }
+        else{
+            arr[mid]=arr[high];
+            arr[high]=2;
             high--;
         }
     }
 }
-
 
 ```
