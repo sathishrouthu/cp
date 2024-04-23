@@ -47,25 +47,19 @@ my Approach:
 4. return no.of ones + maxsubarray sum ( result of step1 + result of step 3).
 
 ```
-int ones = 0;
-for(int i=0;i<n;i++){
-	if(arr[i]==1){
-	    ones+=1;
-	    arr[i]=-1;
+public static int flipBits(int[] arr,int n) {
+	int countOne = 0;
+	int currSum = 0;
+	int maxSum =0;
+	for(int i =0;i<n; i++){
+		countOne+=arr[i];
+		int temp = arr[i]==0 ? 1:-1;
+		currSum += temp;
+		maxSum = Math.max(currSum,maxSum);
+		currSum = Math.max(0,currSum);
 	}
-	else
-    		arr[i]=1;
-    }
-int curr_Sum = 0;
-int maxSum = -1;
-for(int i=0;i<n;i++){
-	curr_Sum += arr[i];
-	maxSum = max(curr_Sum,maxSum);
-	curr_Sum=curr_Sum<0?0:curr_Sum;
-	}
-maxSum = maxSum>0?maxSum:0;
-return (ones+maxSum);
-
+	return countOne+maxSum;
+}
 ```
 
 Problem:
