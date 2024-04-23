@@ -104,20 +104,20 @@ for k = 2 : [ -2 0 -8 9 -2 0 -8 9 ]
 if arr sum > 0 then we can multiply it k-2 times as it will increase the max sub-array sum.
 
 ```
-long long maxSubSumKConcat(vector<int> &arr, int n, int k)
-{
-    long long currsum=0,maxsum = -9999999;
-    for(int i=0;i<n*2;i++){
-            currsum+=arr[i%n];
-            maxsum = max(maxsum,currsum);
-            currsum = currsum<0?0:currsum;
-        }
-    long long sum=0;
-    for(i : arr)	sum+=i;
-    if(sum<=0)
-        return maxsum;
-    else
-        return maxsum+sum*(k-2);
+public static long maxSubSumKConcat(ArrayList<Integer> arr, int n, int k) {
+	long currSum = 0;
+	long maxSum = arr.get(0);
+	long totalSum = 0;
+	for(int i = 0;i<n*2;i++){
+		currSum += arr.get(i%n);
+		maxSum = Math.max(maxSum, currSum);
+		currSum = Math.max(currSum, 0);
+		totalSum += arr.get(i%n);
+	}
+	totalSum /= 2;
+	if(totalSum>0)
+		return maxSum+(k-2)*totalSum;
+	else return maxSum;
 }
 
 ```
@@ -147,37 +147,26 @@ Solution :
 Kadane’s algorithm for 1D array can be used to reduce the time complexity to O(n^3). The idea is to fix the left and right columns one by one and find the maximum sum contiguous rows for every left and right column pair. We basically find top and bottom row numbers (which have maximum sum) for every fixed left and right column pair. To find the top and bottom row numbers, calculate the sum of elements in every row from left to right and store these sums in an array say temp[]. So temp[i] indicates sum of elements from left to right in row i. If we apply Kadane’s 1D algorithm on temp[], and get the maximum sum subarray of temp, this maximum sum would be the maximum possible sum with left and right as boundary columns. To get the overall maximum sum, we compare this sum with the maximum sum so far.
 
 ```
-
-#include <bits/stdc++.h>
-int kadanes(vector<int>& arr,int n){
-	int currsum = 0;
-	int ans  = arr[0];
-	for(int i=0;i<n;i++){
-		currsum += arr[i];
-		ans = max(currsum,ans);
-		currsum = currsum > 0?currsum:0;
-	}
-	return ans;
-}
-int maxSumRectangle(vector<vector<int>>& arr, int n, int m)
-{
-	int row = n;
-	int col = m;
-	int maxSum = INT_MIN;
-
-	for(int left=0;left<col;left++){
-		vector<int> temp(row,0);
-		for(int right = left;right<col;right++){
-			for(int i=0;i<row;i++)
-				temp[i] += arr[i][right];
-
-			int sum = kadanes(temp,row);
-			maxSum = max(sum,maxSum);
+public static int maxSumRectangle(int[][] arr, int row, int col){
+	int finalMaxSum = arr[0][0];
+	for(int left = 0;left<col;left++){
+	    int temp[] = new int[row];
+	    for(int right=left;right<col;right++){
+		for(int i=0;i<row;i++) 
+		    temp[i] += arr[i][right]; 
+	
+		// Apply kadane's on temp
+		int currSum = 0;
+		int maxSum = temp[0];
+		for(int x=0;x<row;x++){
+		    currSum += temp[x];
+		    maxSum = Math.max(currSum,maxSum);
+		    currSum = Math.max(currSum, 0);
 		}
+	
+		finalMaxSum = Math.max(finalMaxSum, maxSum);
+	    }
 	}
-	return maxSum;
+	return finalMaxSum;
 }
-
-
-
 ```
