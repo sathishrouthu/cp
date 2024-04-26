@@ -300,12 +300,29 @@ compute prefix and suffix array that tells the leftmax and right max :
 for  an array like : [ 1  2  1  3  0  4  2 ]
 prefix = [ 1, 2, 2, 3, 3, 4, 4 ]
 suffix = [ 4, 4, 4, 4, 4, 4, 2 ]
-
 at  index i :
 leftmax  = prefix[i]
 rightmax = suffix[i]
-
-
+```
+```
+public static long getTrappedWater(long []arr, int n) {
+    if(n<3) return 0;
+    long[] leftMax = new long[n];
+    long[] rightMax= new long[n];
+    rightMax[n-2] = arr[n-1];
+    for(int i=1;i<n-1;i++){
+        leftMax[i] = Math.max(leftMax[i-1],arr[i-1]);
+        rightMax[n-1-i] = Math.max(rightMax[n-i],arr[n-i] );
+    }
+    long result = 0;
+    for(int i=1;i<n-1;i++){
+        long trap =  (Math.min(leftMax[i],rightMax[i]) - arr[i]);
+        result += trap>0 ? trap : 0;
+    }
+    return result;
+}
+```
+```
 Optimal Approach :
 
 Using two pointers : 
@@ -356,6 +373,34 @@ int trap(vector<int>& height) {
     }
     return res;
 }
+
+// Java Code
+
+public static long getTrappedWater(long []arr, int n) {
+        if(n<3) return 0;
+        long leftMax = 0;
+        long rightMax = 0;
+        int l = 0;
+        int r = n-1;
+        long result = 0;
+        while(l<r){
+            if(arr[l]<=arr[r]){
+                if(arr[l]<leftMax)
+                    result+= leftMax - arr[l];
+                else
+                    leftMax = arr[l];
+                l++;
+            }
+            else{
+                if(arr[r]<rightMax)
+                    result += rightMax - arr[r];
+                else
+                    rightMax = arr[r];
+                r--;
+            }
+        }
+         return result;
+    }
 ```
 
 ### Sum of Two Elements Equals the Third.
