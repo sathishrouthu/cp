@@ -439,6 +439,24 @@ vector<int> findTriplets(vector<int> &arr, int n)
     return {-1,-1,-1};
 }
 
+public static  ArrayList<Integer> findTriplets(int[] arr, int n) {
+   Arrays.sort(arr);
+   for(int i = n-1; i>=0; i--){
+       int l = 0;
+       int r = i-1;
+       while(l<r){
+           if(arr[l]+arr[r]==arr[i]){
+               return new ArrayList<>(Arrays.asList(arr[i],arr[l],arr[r]));
+           }
+           if(arr[l]+arr[r]<arr[i])
+                l++;
+            else 
+                r--;
+       }
+   }
+   return new ArrayList<>();
+}
+
 ```
 
 ### 3 Sum
@@ -480,9 +498,32 @@ vector<vector<int>> findTriplets(vector<int>arr, int n, int K) {
     }
     return res;
 }
-
 ```
-
+```
+// Java Code
+public static ArrayList<ArrayList<Integer>> findTriplets(int[] arr, int n, int K)  {
+		Arrays.sort(arr);
+		ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+		for(int i = 0;i<n;i++){
+			int l = i+1;
+			int r = n-1;
+			while(l<r){
+				int sum = arr[l]+arr[r]+arr[i];
+				if(sum == K){
+					result.add(new ArrayList<>(Arrays.asList(arr[l],arr[r],arr[i])));
+					l++;
+					r--;
+					while(l<r && arr[l]==arr[l-1]) l++;
+					while(l<r && arr[r]==arr[r+1]) r--;
+					while(i+1<n && arr[i]==arr[i+1]) i++;
+				}
+				else if(sum<K) l++;
+				else r--;
+			}
+		}
+		return result;
+	}
+```
 
 ### Valid String
 You have been given a string 'S' containing only three types of characters, i.e. '(', ')' and '*'.
@@ -496,7 +537,79 @@ A Valid String is defined as follows:
 
 Your task is to find out whether the given string is a Valid String or not.
 
+##### Solution :
 
+Let’s first focus on the problem when there are no asterisks. For this problem, we can just use a variable to count the unmatched ‘(‘. Clearly, we don't want the value of this variable to be less than 0 at any time and it should be 0 when the whole string has been matched.
 
+```
+open = 0;
+for each c in string :
+    if c== '('
+        open++;
+    else if c == ')'
+        open--;
+    if(open < 0) return false;        // It means we have a mismatched parenthesis ) which is closed without opening
+return open == 0;
+``` 
+
+Now, when the asterisk is introduced, this variable or number becomes a range, indicating the number of possible unmatched ‘(‘ found. One asterisk just expands this range by 1 and we can use the same principle to check if the above criteria is within the range.
+```
+Algorithm :
+
+Initialize ‘LEAST_OPEN’ to 0, which indicates the least number of unmatched ‘(‘ possible.
+Initialize ‘MAXIMUM_OPEN’ to 0, which indicates the maximum number of unmatched ‘(‘ possible.
+Loop for every character in ‘S’
+If a ‘(‘ is found, increment both ‘LEAST_OPEN’ and ‘MAXIMUM_OPEN' by 1.
+If a ‘)‘ is found, decrement both ‘LEAST_OPEN’ and ‘MAXIMUM_OPEN’ by 1.
+If a ‘*’ is found, we have two choices
+    Use it as a ‘(‘, hence increment ‘MAXIMUM_OPEN’ by 1.
+    Use it as a ‘)‘, hence decrement ‘LEAST_OPEN’ by 1.
+    Using it as an empty string won’t affect the range.
+Set ‘LEAST_OPEN’ to maximum of 0 and ‘LEAST_OPEN’.
+If ‘MAXIMUM_OPEN’ is less than zero, Return false.
+Return true if the value of ‘LEAST_OPEN’ is 0, else false.
+
+```
+
+```
+minOpen = 0;
+maxOpen = 0;
+for each c in string :
+    if c=='(' :
+        minOpen++;            // possibility of minimum open brackets is increased
+        maxOpen++;            // possibility of maximum open brackets is increased
+    else if c == ')':         // an open bracket has been closed
+        minOpen--;            
+        maxOpen--;
+    else                      // an bracket either opened or closed both are possible
+        maxOpen++;            // * considered as an open bracket, then maximum Possible open brackets count increased 
+        minOpen--;            // * considered as an closed bracket, then minimum Possible open brackets count decreased
+    minOpen = max(0,minOpen);
+    if(maxOpen < 0) return false;
+return minOpen == 0;
+```
+```
+public static boolean checkValidString(String s) {
+    int leastOpen = 0 ;
+    int maxOpen = 0;
+    for(char c : s.toCharArray()){
+            if(c=='('){
+                    leastOpen++;
+                    maxOpen++;
+            }
+            else if(c==')'){
+                    leastOpen--;
+                    maxOpen--;
+            }
+            else{
+                    maxOpen++;
+                    leastOpen--;
+            }
+            leastOpen = Math.max(0,leastOpen);
+            if(maxOpen<0) return false;
+    }
+    return leastOpen==0;
+}
+```
 
 
