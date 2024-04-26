@@ -150,6 +150,40 @@ vector<vector<int>> findTriplets(vector<int>arr, int n) {
     return res;
 }
 
+// Java Code
+
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+
+    public static ArrayList<ArrayList<Integer>> findTriplets(ArrayList<Integer> arr, int n) {
+        Collections.sort(arr);
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0;i<n;i++){
+            int l = i+1;
+            int r = n-1;
+            while(l<r){
+                int sum = arr.get(i)+arr.get(l)+arr.get(r);
+                if( sum == 0){
+                    result.add(new ArrayList<>(Arrays.asList(arr.get(i),arr.get(l),arr.get(r))));
+                    l++;
+                    r--;
+                    while(l<r && arr.get(l).equals(arr.get(l-1))) l++;
+                    while(l<r && arr.get(r).equals(arr.get(r+1))) r--;
+                }
+                else if ( sum > 0)
+                    r--;
+                else 
+                    l++;
+                while(i+1<n && arr.get(i).equals(arr.get(i+1)))
+                    i++;
+            }
+        }
+         return result;
+    }
+}
 ```
 
 
