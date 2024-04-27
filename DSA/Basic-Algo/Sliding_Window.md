@@ -199,6 +199,35 @@ vector<int> smallestSubarrayWithKDistinct(vector<int> &arr, int k)
     return {start,end};
 }
 
+// Java
+
+public static ArrayList<Integer> smallestSubarrayWithKDistinct(ArrayList<Integer> a, int K){
+       HashMap<Integer,Integer> map = new HashMap<>();
+       int n = a.size();
+       int start = 0;
+       int end = n;
+       int i = 0;
+       int j = 0;
+       while(j<n){
+           map.put(a.get(j), map.getOrDefault(a.get(j),0)+1);
+           while(map.size()==K){
+               if((j-i) < (end-start)){
+                   start = i;
+                   end = j;
+               }
+               map.put(a.get(i), map.get(a.get(i))-1 );
+               if(map.get(a.get(i)) == 0 ) 
+                   map.remove(a.get(i));
+               i++;
+           }
+           j++;
+       }
+       if(end-start == n){
+           return new ArrayList<>(Arrays.asList(-1));
+       }
+       ArrayList<Integer> result = new ArrayList<>(Arrays.asList(start,end));
+       return result;
+ }
 ```
 
 ### Three Pointer.
@@ -236,50 +265,41 @@ return ans;
 start with three pointer i,j,k each pointig to X,Y,Z
 for each iteration 
  - find the max of 3 elements at current
- - find the max of 3 elements at current
- - find diffrenece b/w max and min and update the results
+ - find the min of 3 elements at current
+ - find diffrenece b/w max and min and update the results as below:
+       if found difference is less than previously found diff,
+       it means we have a less difference value which is better than previously found difference
  we have to minimize this difference to get optimal value of min difference of 3 elements
  inorder to minimize above value we have to increase the least valueamong 3 values.
  since the arrays are sorted we increase the pointer which has the least value among all 3;
  ```
  
  ```
- #include<bits/stdc++.h>
-int maximum(int a, int b, int c)
-{
-   return max(max(a, b), c);
-}
-int minimum(int a, int b, int c)
-{
-   return min(min(a, b), c);
-}
-int threePointer(vector<int>& X, vector<int>& Y, vector<int>& Z)
-{   
-    int A = X.size();
-    int B = Y.size();
-    int C = Z.size();
-    int Xi,Yi,Zi;
-    int i=0,j=0,k=0,h,l;
-    int diff = INT_MAX;
-    int abs_max,ans = INT_MAX;
-    while(i<A && j<B && k<C){
-        h = maximum(X[i],Y[j],Z[k]);
-        l = minimum(X[i],Y[j],Z[k]);
-        if ( h-l < diff ){
-            diff = h-l;
-            abs_max = maximum(abs(X[i]-Y[j]),abs(Y[j]-Z[k]),abs(X[i]-Z[k]));
-            ans = min(ans,abs_max);
+public static int threePointer(ArrayList<Integer> X, ArrayList<Integer> Y, ArrayList<Integer> Z) {
+        int A = X.size();
+        int B = Y.size();
+        int C = Z.size();
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        int minDiff  = Integer.MAX_VALUE;
+        int result = Integer.MAX_VALUE;
+        while(i<A && j<B && k <C){
+            int Xi = X.get(i);
+            int Yj = Y.get(j);
+            int Zk = Z.get(k);
+            int high = Math.max(Xi,Math.max(Yj,Zk));
+            int low = Math.min(Xi,Math.min(Yj,Zk));
+            if(high - low < minDiff ){
+                minDiff = high-low;
+                result = Math.min(result,Math.abs(minDiff));
+            }
+            if(Xi == low) i++;
+            else if(Yj==low) j++;
+            else k++;
         }
-        if(l==X[i]){
-            i++;
-        }
-        else if(l==Y[j])
-            j++;
-        else
-            k++;
+        return result;
     }
-    return ans;    
-}
  
  ```
 
@@ -401,5 +421,32 @@ string shortestSubstring(string s)
     }
     return s.substr(start,min_length+1);
 }
+
+// Java Code
+
+public static String shortestSubstring(String s) {
+		int n = s.length();
+		Set<Character> set = new HashSet<>();
+		for(char c : s.toCharArray()) set.add(c);
+		int distinct = set.size();
+		HashMap<Character,Integer> map = new HashMap<>();
+		int start = 0,end = n-1;
+		int i = 0,j=0;
+		while(j<n){
+			map.put(s.charAt(j),map.getOrDefault(s.charAt(j), 0)+1);
+			while(map.size()==distinct){
+				if(j-i < end-start){
+					start = i;
+					end = j;
+				}
+				map.put(s.charAt(i), map.get(s.charAt(i))-1 );
+				if(map.get(s.charAt(i)) == 0) 
+						map.remove(s.charAt(i));
+				i++;
+			}
+			j++;
+		}
+		return s.substring(start, end+1);
+	}
 ```
 
