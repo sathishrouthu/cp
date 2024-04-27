@@ -193,3 +193,78 @@ Thus, you should return ‘4’ as the answer.
 
 ```
 
+
+
+
+### Minimum Window Substring
+You are given two strings ‘A’ and ‘B’. Your task is to return a substring ‘S’ of ‘A’ such that the following conditions hold true :
+
+- You can make ‘B’ from ‘S’ by removing some characters and rearranging some characters zero or more times.
+- Length of ‘S’ must be as minimum as possible.
+Note :
+Testcases are generated such that a substring always exists and is unique.
+
+Example :
+
+A = ninjas, B = sin
+
+All possible substrings with which 'B' can be created are
+"ninjas", "injas".
+
+Hence the substring with minimum length is "injas".
+
+```
+public class Solution {
+    public static String minSubString(String a, String b) {
+        int n = a.length();
+
+        // To maintain answer
+        int start = 0, end = n;
+
+        // Two pointers to iterate the String A
+        int i = 0, j = 0;
+
+        // To keep track of required letters from substring to form String B
+        int need = b.length();
+
+        // to keep track of all the letters from B and letters encountered in A
+        int[] freq = new int[26];
+
+        // Initialize with frequency of characters in B
+        for(int k=0;k<b.length();k++){
+            freq[b.charAt(k) - 'a']++;
+        }
+
+        while(j < n){
+            // we encountered a character in A,
+            //So, we need to decrease it's frequency in freq array
+            freq[a.charAt(j)-'a']--;
+            // even after decreasing, if it's frequency is still >= 0 means, this characters is present in B, so it is one of needed character
+            if(freq[a.charAt(j)-'a'] >=0)
+            // now decrease the need as we encountered a character which presents in B
+                need--;
+
+            // if need became 0 means, we obtained a substring from A, which had all the needed characters to form B
+            // now we need to shrink the window from left to get minimum possible substring.
+            while(need==0){
+                // Update the answer
+                if(j-i < end-start){
+                    end = j;
+                    start = i;
+                }
+                // since we are moving window to the left, previously we have reduced the freq of a[i], now we need to increase it.
+                // it means that, we have not included the a[i] in substring from now.
+                freq[a.charAt(i)-'a']++;
+                // even after increasing if the need is still > 0 it means it is one of the character from B.
+                if(freq[a.charAt(i)-'a'] > 0)
+                // since we removed the required character to form B, we have to increase the need;
+                    need++;
+                i++;
+            }
+            j++;
+        }
+        if(end==n) return "-1";
+        return a.substring(start,end+1);
+    }
+}
+```
