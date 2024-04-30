@@ -118,7 +118,61 @@ computeLPS(String str ):
                 lps[i] = 0;
                 i++;
 ```
-                
+
+```
+class Solution
+{
+    ArrayList<Integer> search(String pat, String txt)
+    {
+        char[] pattern = pat.toCharArray();
+        char[] text = txt.toCharArray();
+        int n = text.length;
+        int m = pattern.length;
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int[] lps = new int[m];
+        // Compute LPS
+        int len = 0;
+        int i=1;
+        while(i<m){
+            if(pattern[i] == pattern[len]){
+                lps[i] = len+1;
+                i++;
+                len++;
+            }
+            else{
+                if(len!=0){
+                    len = lps[len-1];
+                }
+                else{
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        // Search for pattern using LPS
+        i = 0;
+        int j = 0;
+        while(i<n){
+            if(text[i] == pattern[j]){
+                i++;
+                j++;
+            }
+            else{
+                if(j!=0)
+                    j = lps[j-1];
+                else
+                    i++;
+            }
+            if(j==m){
+                result.add(i-j + 1);
+                j = lps[j-1];
+            }
+        }
+        return result;
+    }
+}
+```
 
 
 
