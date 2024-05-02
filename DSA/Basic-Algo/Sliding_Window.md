@@ -1,5 +1,9 @@
 # Sliding Window
 
+Read this  :  [Sliding Window] (https://leetcode.com/problems/frequency-of-the-most-frequent-element/discuss/1175088/C++-Maximum-Sliding-Window-Cheatsheet-Template/)
+
+Substring problems template : [Sliding Window substrings/ subarray ] (https://leetcode.com/problems/minimum-window-substring/discuss/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems/)
+
 The sliding window technique is useful for solving problems in arrays or strings. Generally, it is considered as a technique 
 that could reduce the time complexity from O(n²) to O(n).
 
