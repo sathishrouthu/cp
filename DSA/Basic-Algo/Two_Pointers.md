@@ -1,3 +1,186 @@
+### 167. Two Sum II - Input Array Is Sorted
+```
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int i = 0;
+        int j = nums.length-1;
+        while(i<j){
+            int sum = nums[i]+nums[j];
+            if(sum==target){
+                int[] ans = {i+1,j+1};
+                return ans;
+            }
+            if(sum<target)
+                i++;
+            else
+                j--;
+        }
+        return new int[0];
+    }
+}
+```
+
+### 15. 3Sum
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.  
+Notice that the solution set must not contain duplicate triplets.  
+```
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums.length;
+        for(int i=0;i<n;i++){
+            int j = i+1,k=n-1;
+            while(j<k){
+                int sum = nums[i]+nums[j]+nums[k];
+                if(sum == 0){
+                    result.add(Arrays.asList(nums[i],nums[j],nums[k]));
+                    while(j<k && nums[j]==nums[j+1]) j++;
+                    while(j<k && nums[k]==nums[k-1]) k--;
+                    while(i<n-1 && nums[i]==nums[i+1]) i++;
+                    j++;
+                    k--;
+                }
+                else if(sum<0)
+                    j++;
+                else
+                    k--;
+            }
+        }
+        return result;
+    }
+}
+```
+
+### 18. 4Sum
+Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:  
+
+0 <= a, b, c, d < n  
+a, b, c, and d are distinct.  
+nums[a] + nums[b] + nums[c] + nums[d] == target  
+You may return the answer in any order.  
+  
+```
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        int n = nums.length;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                int k = j+1,l=n-1;
+                while(k<l){
+                    long sum = nums[i]+nums[j];
+                    sum += nums[k]+nums[l];
+                    if(sum == target){
+                        result.add(Arrays.asList(nums[i],nums[j],nums[k],nums[l]));
+                        while(k<l && nums[k]==nums[k+1]) k++;
+                        while(k<l && nums[l]==nums[l-1]) l--;
+                        while(j<n-1 && nums[j]==nums[j+1]) j++;
+                        while(i<n-1 && nums[i]==nums[i+1]) i++;
+                        k++;
+                        l--;
+                    }
+                    else if(sum<target)
+                        k++;
+                    else
+                        l--;
+                }
+            }
+        }
+        return result;
+    }
+}
+```
+
+### 1498. Number of Subsequences That Satisfy the Given Sum Condition
+
+You are given an array of integers nums and an integer target.  
+Return the number of non-empty subsequences of nums such that the sum of the minimum and maximum element on it is less or equal to target. Since the answer may be too large, return it modulo 10^9 + 7.  
+
+Ex : 
+Input: nums = [3,5,6,7], target = 9  
+Output: 4  
+Explanation: There are 4 subsequences that satisfy the condition.  
+[3] -> Min value + max value <= target (3 + 3 <= 9)  
+[3,5] -> (3 + 5 <= 9)  
+[3,5,6] -> (3 + 6 <= 9)  
+[3,6] -> (3 + 6 <= 9)  
+
+#### Naive Approach
+In the given array, we need to find all subsequences first and then max Elemement and min element of each subsequence.
+count all the subsequences which satisfies the condition.
+
+#### Two pointers approach :  
+if we generate a subsequence, it should follow the same order of elements as original array.
+but after finding subsequence, whatever the order of elements we are just finding the minimum and maximum elements in that subsequence.  
+that means, we are ignoring order of subsequence as we need only min and max elements which can present anywhere in the subsequence.  
+for example: for the subsequence :  
+[3,4,2,1] min and max elements are : 1,4  
+these are same for the subsequence [ 1,2,3,4 ] also  
+so, order of subsequence doesn't matter for the given codition in the question.  
+
+now we sort the Array,  
+for each element we take this element as minimum of subsequence and then we will the range in which max element can exist.  
+
+for example [ 3,4,5,8 ] target = 9  
+lets say i th element as minimum, if i=0 then minimum=3;  
+then we will find maximum for our valid subsequence ie; 3 + max <= 9  
+let's say this max as jth element. j = 2, max = 5  
+
+there exists j-i+1 elements within range of min and max,  
+now we can form 2^(j-i) subsequences with these elements, how ?  
+we took 3 as minimum, and since our subsequence has to be non empty we will fix this element in all subsequences:
+```
+3	5	6
+__________________
+3	-	-	[3]
+3	5	-	[3,5]
+3	-	6	[3,6]
+3	5	6	[3,5,6]
+```
+when we fix our current element, we have j-i elements to either pick or not pick each element, so we have 2^(j-i) options to create a subsequence.  
+Algo : 
+```
+initializie i=0,j=n-1;
+count = 0;
+while i <= j:	
+	if arr[i]+arr[j] < target:		// arr[i] is minimum and arr[j[ is maximum
+ 		count += pow(2,j-i);
+   		i++;
+   	else:					// our min and max sum > target
+    		j--;
+```
+we need to calculate the Power function efficiently as we are calulating 2^j-i everytime.  
+methods to calculate pow(x,n):  
+1. Binary exponentiation  
+2. pre calculate by using array and << operator.  
+	pow[i] = pow[i-1]<<1 or pow[i-1]*2;  
+```
+class Solution {
+    public int numSubseq(int[] nums, int target) {
+        int mod = (int)1e9+7;
+        Arrays.sort(nums);
+        int n = nums.length;
+        int[] pow = new int[n];
+        pow[0] = 1;
+        for(int i=1;i<n;i++)
+            pow[i] = (pow[i-1]<<1)%mod;
+        int i=0,j=n-1;
+        int count = 0;
+        while(i<=j){
+            if(nums[i]+nums[j] <= target){
+                count = (count+pow[j-i])%mod;
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return count;
+    }
+}
+```
+
 ### Longest Mountain Sub Array
 
 You are given an array of 'N' integers denoting the heights of the mountains. You need to find the length of the longest subarray which has the shape of a mountain.
