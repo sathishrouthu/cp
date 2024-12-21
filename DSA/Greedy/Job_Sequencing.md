@@ -1,4 +1,4 @@
-/*
+```
 Given a set of N jobs where each jobi has a deadline and profit associated with it.
 
 Each job takes 1 unit of time to complete and only one job can be scheduled at a time. We earn the profit 
@@ -16,16 +16,38 @@ Output: 2 60
 Explanation: The 3rd job with a deadline 1 is performed during the first unit of time .
 The 1st job is performed during the second unit of time as its deadline is 4.
 Profit = 40 + 20 = 60
+```
+**Solution:**
 
-*/
-/*
+```
+We are given n jobs where all jobs takes same time to complete but different profits and different deadlines.
+1. we need to complete jobs with max profits first. ( Sort the array as per profits in descending order )
+2. Delay the jobs to the end days.
+    for example we had a job which has max profit and deadline is x.
+    we should try to aloocate this job at the xth day if that days is not already occupied by another job.
+    if xth day is already allocated to some other job, which given max profit than this,
+    we should try x-1 th day and then x-2 th day and so on..
+    because of this, the earlier days will be free which might be useful for the other jobs.
+
+- Sort the jobs as per profits in descening order.
+- find the max deadline in the given array
+- create and array of length n which represents the days to be allocated for jobs ( inititalize all with -1 )
+- for each job:
+    x = deadline of current job
+        if xth day is already allocated:
+            check previous days until an empty slot is found.
+        else:
+            allocate this job on the xth day.
+
+```
+
+```
 struct Job 
 { 
     int id;	 // Job Id 
     int dead; // Deadline of job 
     int profit; // Profit if job is over before or on deadline 
 };
-*/
 
 class Solution 
 {
@@ -57,3 +79,4 @@ class Solution
         return{count,maxProfit};
     } 
 };
+```
