@@ -54,6 +54,7 @@ public int findPlatform(int[] Arrival, int[] Departure) {
     }
 ```
 **Optimal:**
+```
 arr[] = {0900, 0940, 0950, 1100, 1500, 1800}
 dep[] = {0910, 1200, 1120, 1130, 1900, 2000}
 Consider we have a clock, firstly we start at 0 and track count of required platforms in count variable.
@@ -76,6 +77,7 @@ to check the clock at each event of arrival or departure, we need to sort the ti
 (0900,A), (0910,D), (0940,A), (0950,A), (1100,A), (1120,A), (1130,D), (1200,D) .......
 Or 
 we can sort Arrivals and Departs separately and keep two pointers to iterate each array.
+```
 ```
 public int findPlatform(int[] Arrival, int[] Departure) {
         int n = Arrival.length;
