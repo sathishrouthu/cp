@@ -82,7 +82,7 @@ class Solution {
     }
 }
 ```
-
+**Simpler:**
 **To Return max count of meetings**
 ```
 // This will return the count of maximum meetings possible
