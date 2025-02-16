@@ -1,4 +1,73 @@
 ```
+class Node{
+    public int key,val;
+    public Node next,prev;
+    public Node(){
+        key=-1;
+        val=-1;
+    }
+    public Node(int key, int val){
+        this.key = key;
+        this.val = val;
+    }
+}
+class LRUCache {
+    public Node head,tail;
+    Map<Integer,Node> map;
+    int capacity;
+    public LRUCache(int capacity) {
+        map = new HashMap<>();
+        head = new Node();
+        tail = new Node();
+        head.next=tail;
+        tail.prev = head;
+        this.capacity = capacity;
+    }
+    public void deleteNode(Node node){
+        Node nextNode = node.next;
+        Node prevNode = node.prev;
+        nextNode.prev = prevNode;
+        prevNode.next = nextNode; 
+    }
+    public void insertFirst(Node node){
+        Node headNext = head.next;
+        headNext.prev = node;
+        head.next = node;
+        node.next = headNext;
+        node.prev = head;
+    }
+    public int get(int key){
+        if(map.containsKey(key)){
+            Node node = map.get(key);
+            deleteNode(node);
+            insertFirst(node);
+            return node.val;
+        }else{
+            return -1;
+        }
+    }
+
+    public void put(int key, int value) {
+        if(map.containsKey(key)){
+            Node node = map.get(key);
+            deleteNode(node);
+            node.val = value;
+            insertFirst(node);
+        }else{
+            if(map.size() == capacity){
+                Node lruNode = tail.prev;
+                deleteNode(lruNode);
+                map.remove(lruNode.key);   
+            }
+            Node newNode = new Node(key,value);
+            map.put(key,newNode);
+            insertFirst(newNode);
+        }
+    }
+}
+```
+
+```
 
 #include<bits/stdc++.h>
 class LRUCache
