@@ -1,5 +1,94 @@
+# Least Frequently Used Cache
+
+Pre-requisite: **LRU Cache**
+
+We maintain a DLL for each frequency of usage.
+1. DLL will contain nodes which will have : key, value, frequency, next and prev.
+2. An HashMap to save the key and Node (keyNodeMap)
+3. An HashMap to save the DLLs for each frequency of usage. (freqListMap)
+4. A variable to know the leastFrequency in cache. (leastFrequency)
+
+Our cache will look like below:
+```
+Node[key,value,Frequency]
+
+leastFrequency = 1
+
+Freq List Map:
+Freq :    LRU Cache
+1    :    Head <--> [11,21,1] <--> [14,10,1] <--> Tail
+2    :    Head <--> [13,19,2] <--> Tail
+3    :    Head <--> [12,20,3] <--> [15,13,3] <--> [10,25,3] <--> Tail
+
+keyNodeMap:
+key    :     Node [key, val, frequency]
+10     :    [10,25,3]
+11     :    [11,21,1]
+12     :    [12,20,3]
+13     :    [13,19,2]
+14     :    [14,10,1]
+15     :    [15,13,3]
+```
+##### For a put operation:
+```
+Check if key already exists in keyNodeMap:
+IF exists:
+    get the node from the keyNode map
+    update the node's value.
+    update the node's frequency in cache.
+Else:
+    check cache size and maxCapacity
+    If cache FULL:
+            leastFreqList = Get the list from freqListMap which have the key leastFrequency.
+            lastNodekey = leastFreqList's last Node key
+            remove the lastNodeKey from keyNodeMap
+            remove the last Node from leastFreqList
+            decrement the currentSize of cache.
+    // since this is a new node, It's initial frquency would be 1.
+    set leastFrequency = 1;
+    create newNode (key,val,1)
+    check if frequency 1 already exists in freqListMap
+    If exists:
+        get the leastFrequentList = list of frequency 1 in freqListMap.
+        add the newNode at the front of leastFrequenctList ( since newNode will be most recent one).
+    Else:
+        newList = create a new DLL
+        add newNode to newList
+        add [ 1 : newList ] to freqListMap
 ```
 
+##### For a get operation:
+```
+check if key exists in keyNodeMap:
+if exists:
+    get the Node from keyNodeMap
+    update the node's frequency in cache.
+    return node's value;
+else:
+    return -1;
+```
+
+##### Updating frequency of a node in cache
+This operation increments the given node's frequency by 1 and update it to the corresponding List.
+```
+giveNode : node
+
+currentFrequency = node.frequency
+containingList = get the list which has the currentFrequency
+remove the node from the containingList;
+IF leastFrequency in cache is currentFrequency and containingList has no more nodes:
+    increment the leastFrequency by 1.
+newFrequency = currentFrequency+1 (increment the node's frequency by 1)
+check if a list already exists with newFrequency.
+IF Exists:
+    add the node at the front of the exisiting list
+Else:
+    create a new List and add the node to the list.
+    add the new List in freqlistMap.
+
+```
+
+```
 class Node{
     int key;
     int val;
