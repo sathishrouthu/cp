@@ -29,7 +29,7 @@ key    :     Node [key, val, frequency]
 14     :    [14,10,1]
 15     :    [15,13,3]
 ```
-##### For a put operation:
+#### For a put operation:
 ```
 Check if key already exists in keyNodeMap:
 IF exists:
@@ -57,7 +57,7 @@ Else:
         add [ 1 : newList ] to freqListMap
 ```
 
-##### For a get operation:
+#### For a get operation:
 ```
 check if key exists in keyNodeMap:
 if exists:
@@ -68,7 +68,7 @@ else:
     return -1;
 ```
 
-##### Updating frequency of a node in cache
+#### Updating frequency of a node in cache
 This operation increments the given node's frequency by 1 and update it to the corresponding List.
 ```
 giveNode : node
@@ -88,7 +88,7 @@ Else:
     add the new List in freqlistMap.
 
 ```
-
+### Code (java)
 ```
 class Node{
     int key;
