@@ -78,7 +78,8 @@ containingList = get the list which has the currentFrequency
 remove the node from the containingList;
 IF leastFrequency in cache is currentFrequency and containingList has no more nodes:
     increment the leastFrequency by 1.
-newFrequency = currentFrequency+1 (increment the node's frequency by 1)
+newFrequency = currentFrequency+1
+update the node's frequenct to newFrequency.
 check if a list already exists with newFrequency.
 IF Exists:
     add the node at the front of the exisiting list
