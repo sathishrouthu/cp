@@ -1,3 +1,40 @@
+
+We maintain a doubly linked list to maintain cache elements and an Hash Map to maintain cache keys.
+1. DLL will consists of nodes where each node will have : key, value, next, prev;
+2. HashMap stores the key and it's corresponding node.
+
+Inititally DLL will have two pointers Head and Tail
+```
+Head <--> [3,15] <--> [4,10] <--> Tail
+dummy      MRU         LRU        Dummy
+```
+- Nodes closer to head are most recently used nodes.
+- Nodes closer to tail are least recently used nodes.
+```
+For a put operation:
+    Check if key already exists in hashmap:
+        if exists:
+            remove the node from dll
+            update it's value and insert the node at front.
+        else:
+            check if capacity is full
+            If full:
+                remove the last node in the DLL and remove that key from hashmap.
+                add new node to the DLL at the front and add the key in hashmap.
+            else:
+                add the new node at the front and add the key in hashmap.
+```
+```
+For a get operation:
+    check if key exists in hash map:
+    if exists:
+        get the node
+        remove from dll
+        add the node at front.
+        return node's value.
+    else
+        return -1; 
+```
 ```
 class Node{
     public int key,val;
