@@ -67,3 +67,34 @@ public int candy(int[] ratings) {
 }
 ```
 ### Optimal using slope concept:
+```java
+class Solution {
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        int sum=1;
+        int i = 1;
+        while(i<n){
+            if(ratings[i] == ratings[i-1]){
+                sum++;
+                i++;
+                continue;
+            }
+            int peak = 1;
+            while(i<n && ratings[i]>ratings[i-1]){
+                sum += peak+1;
+                peak++;
+                i++;
+            }
+            int down = 1;
+            while(i<n && ratings[i]<ratings[i-1]){
+                sum+=down;
+                down++;
+                i++;
+            }
+            sum += down>peak ? down-peak : 0;
+        }
+        return sum;
+    }
+}
+
+```
